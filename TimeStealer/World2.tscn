@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Resources/Standard sprites upd.png" type="Texture" id=1]
+[ext_resource path="res://MainHero.gd" type="Script" id=2]
+[ext_resource path="res://World2.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 54.6888, 45.4514 )
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+position = Vector2( -0.698338, 0.698334 )
+collision/safe_margin = 0.001
+script = ExtResource( 2 )
+
+[node name="Hero" type="Sprite" parent="KinematicBody2D"]
+position = Vector2( 279.109, 167.569 )
+scale = Vector2( 11.0633, 13.5686 )
+texture = ExtResource( 1 )
+hframes = 2
+region_enabled = true
+region_rect = Rect2( 78.6576, 192.451, 34.0562, 17.9243 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
+position = Vector2( 278.636, 149.444 )
+shape = SubResource( 1 )

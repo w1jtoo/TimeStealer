@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Resources/Standard sprites upd.png" type="Texture" id=1]
+
+[sub_resource type="AtlasTexture" id=1]
+
+[node name="Standard sprites upd" type="Sprite"]
+position = Vector2( -24447.9, -5383.2 )
+scale = Vector2( 891.245, 803.584 )
+texture = SubResource( 1 )
+region_rect = Rect2( 0.002, 0, 0, 0 )
+
+[node name="Standard sprites upd" type="Sprite" parent="."]
+position = Vector2( 27.8836, 7.00089 )
+scale = Vector2( 0.00657204, 0.00657204 )
+texture = ExtResource( 1 )
+hframes = 4
+region_enabled = true
+region_rect = Rect2( 16.628, 112.792, 63.7728, 17.3583 )
