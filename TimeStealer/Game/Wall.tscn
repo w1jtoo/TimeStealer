@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Resources/sewer_1.png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 208.175, 107.99 )
+
+[node name="Wall" type="StaticBody2D"]
+position = Vector2( -3.17334, 4.76001 )
+rotation = -0.00577593
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = -69.8462
+margin_top = 66.0145
+margin_right = -21.8462
+margin_bottom = 106.014
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="sewer_1" type="Sprite" parent="TextureRect"]
+position = Vector2( 259.704, -165.784 )
+scale = Vector2( 11.8898, 11.8898 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 48, 32, 16 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 187.235, -97.3132 )
+shape = SubResource( 1 )
