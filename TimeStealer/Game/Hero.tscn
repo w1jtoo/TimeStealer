@@ -4,7 +4,7 @@
 [ext_resource path="res://KinematicBody2D.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 74.4947, 55.576 )
+extents = Vector2( 16.5377, 12.9159 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "Idle"
@@ -24,18 +24,17 @@ tracks/0/keys = {
 }
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
-position = Vector2( 258.387, 213.348 )
+scale = Vector2( 5, 5 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -64.2853, 89.4952 )
+position = Vector2( -22.7275, 25.2006 )
 shape = SubResource( 1 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
-margin_left = -65.1084
-margin_top = 86.2646
-margin_right = -49.1084
-margin_bottom = 94.2646
+margin_right = 16.0
+margin_bottom = 8.0
+rect_scale = Vector2( 5, 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
