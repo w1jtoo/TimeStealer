@@ -5,4 +5,4 @@
 [node name="Node2D" type="Node2D"]
 
 [node name="KinematicBody2D" parent="." instance=ExtResource( 1 )]
-position = Vector2( 234.02, 205.226 )
+position = Vector2( 150.045, 364.986 )

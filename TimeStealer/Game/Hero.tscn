@@ -28,21 +28,19 @@ position = Vector2( 258.387, 213.348 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 81.3462, 73.9732 )
+position = Vector2( -64.2853, 89.4952 )
 shape = SubResource( 1 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_left = -65.1084
 margin_top = 86.2646
-margin_right = 89.8916
-margin_bottom = 188.265
+margin_right = -49.1084
+margin_bottom = 94.2646
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Standard sprites upd" type="Sprite" parent="TextureRect"]
-position = Vector2( 137.97, -28.8664 )
-scale = Vector2( 16.6565, 15.2986 )
 texture = ExtResource( 1 )
 hframes = 6
 frame = 1
