@@ -1,13 +1,71 @@
 [gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://KinematicBody2D.gd" type="Script" id=1]
 [ext_resource path="res://Resources/wizard spritesheet calciumtrice.png" type="Texture" id=2]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="GDScript" id=1]
+script/source = "extends KinematicBody2D
+
+const ACCELERATION = 500
+const MAX_SPEED = 150
+const FRICTION = 500
+
+var velocity = Vector2.ZERO
+var sex = Male
+var previousTextureId = 0
+
+onready var animationPlayerMale = $AnimationPlayerMale
+onready var animationPlayerFemale = $AnimationPlayerFemale
+onready var femaleTextures = [$TextureRect/idle_female, $TextureRect/moving_right_female, $TextureRect/moving_left_female,
+$TextureRect/attack_female, $TextureRect/deflect_female, $TextureRect/death_female]
+onready var maleTextures = [$TextureRect/idle_male, $TextureRect/moving_right_male, $TextureRect/moving_left_male,
+$TextureRect/attack_male, $TextureRect/deflect_male, $TextureRect/death_male]
+
+func _ready():
+	var textures = maleTextures if sex == Male else femaleTextures
+	textures[previousTextureId].show()
+
+func _physics_process(delta):
+	var input_vector = Vector2.ZERO
+	input_vector.x = Input.get_action_strength(\"ui_right\") - Input.get_action_strength(\"ui_left\")
+	input_vector.y = Input.get_action_strength(\"ui_down\") - Input.get_action_strength(\"ui_up\")
+	input_vector = input_vector.normalized()
+	
+	var animationPlayer = animationPlayerMale if sex == Male else animationPlayerFemale
+	
+	if input_vector != Vector2.ZERO:
+		if input_vector.x > 0:
+			animationPlayer.play(\"move_right\")
+			showTexture(1)
+		elif input_vector.x < 0:
+			animationPlayer.play(\"move_left\")
+			showTexture(2)
+		else:
+			animationPlayer.play(\"idle\")
+			showTexture(0)
+		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
+	else:
+		animationPlayer.play(\"idle\")
+		showTexture(0)
+		velocity = velocity.move_toward(input_vector, ACCELERATION * delta)
+		
+	
+	velocity = move_and_slide(velocity)
+	
+enum {Male, Female}
+
+
+func showTexture(textureId):
+	if textureId != previousTextureId:
+		var textures = maleTextures if sex == Male else femaleTextures
+		textures[previousTextureId].hide()
+		textures[textureId].show()
+		previousTextureId = textureId
+"
+
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 8, 16 )
 
-[sub_resource type="Animation" id=2]
-resource_name = "attack"
+[sub_resource type="Animation" id=3]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/attack_female:frame")
@@ -22,8 +80,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "death"
+[sub_resource type="Animation" id=4]
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/death_female:frame")
 tracks/0/interp = 1
@@ -37,8 +94,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "deflect"
+[sub_resource type="Animation" id=5]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/deflect_female:frame")
@@ -53,8 +109,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "idle"
+[sub_resource type="Animation" id=6]
 length = 1.973
 loop = true
 tracks/0/type = "value"
@@ -70,8 +125,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "move_left"
+[sub_resource type="Animation" id=7]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/moving_left_female:frame")
@@ -86,8 +140,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=7]
-resource_name = "move_right"
+[sub_resource type="Animation" id=8]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/moving_right_female:frame")
@@ -102,8 +155,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "attack"
+[sub_resource type="Animation" id=9]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/attack_male:frame")
@@ -119,7 +171,6 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=10]
-resource_name = "death"
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/death_male:frame")
@@ -134,8 +185,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=9]
-resource_name = "deflect"
+[sub_resource type="Animation" id=11]
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/deflect_male:frame")
 tracks/0/interp = 1
@@ -149,8 +199,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=11]
-resource_name = "idle"
+[sub_resource type="Animation" id=12]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -166,8 +215,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=12]
-resource_name = "move_left"
+[sub_resource type="Animation" id=13]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/moving_left_male:frame")
@@ -182,8 +230,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=13]
-resource_name = "move_right"
+[sub_resource type="Animation" id=14]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/moving_right_male:frame")
@@ -199,7 +246,9 @@ tracks/0/keys = {
 }
 
 [node name="Player" type="KinematicBody2D"]
-script = ExtResource( 1 )
+position = Vector2( 400, 300 )
+scale = Vector2( 4, 4 )
+script = SubResource( 1 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_left = -16.0
@@ -242,7 +291,6 @@ visible = false
 position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 10
-frame = 1
 region_enabled = true
 region_rect = Rect2( -1, 256, 320, 32 )
 
@@ -297,7 +345,6 @@ visible = false
 position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 10
-frame = 9
 region_enabled = true
 region_rect = Rect2( -1, 96, 320, 32 )
 
@@ -321,22 +368,22 @@ region_rect = Rect2( -1, 128, 320, 32 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="AnimationPlayerFemale" type="AnimationPlayer" parent="."]
 autoplay = "idle"
-anims/attack = SubResource( 2 )
-anims/death = SubResource( 3 )
-anims/deflect = SubResource( 4 )
-anims/idle = SubResource( 5 )
-anims/move_left = SubResource( 6 )
-anims/move_right = SubResource( 7 )
+anims/attack = SubResource( 3 )
+anims/death = SubResource( 4 )
+anims/deflect = SubResource( 5 )
+anims/idle = SubResource( 6 )
+anims/move_left = SubResource( 7 )
+anims/move_right = SubResource( 8 )
 
 [node name="AnimationPlayerMale" type="AnimationPlayer" parent="."]
 autoplay = "idle"
-anims/attack = SubResource( 8 )
+anims/attack = SubResource( 9 )
 anims/death = SubResource( 10 )
-anims/deflect = SubResource( 9 )
-anims/idle = SubResource( 11 )
-anims/move_left = SubResource( 12 )
-anims/move_right = SubResource( 13 )
+anims/deflect = SubResource( 11 )
+anims/idle = SubResource( 12 )
+anims/move_left = SubResource( 13 )
+anims/move_right = SubResource( 14 )
