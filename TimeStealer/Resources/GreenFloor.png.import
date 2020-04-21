@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Standard sprites upd.png-0ffb16334d37d1c18ad2e945a233078b.stex"
+path="res://.import/GreenFloor.png-122ae6b42cf337f1a8340e155496dedd.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/Standard sprites upd.png"
-dest_files=[ "res://.import/Standard sprites upd.png-0ffb16334d37d1c18ad2e945a233078b.stex" ]
+source_file="res://Resources/GreenFloor.png"
+dest_files=[ "res://.import/GreenFloor.png-122ae6b42cf337f1a8340e155496dedd.stex" ]
 
 [params]
 
