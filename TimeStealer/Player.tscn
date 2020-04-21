@@ -1,0 +1,342 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://KinematicBody2D.gd" type="Script" id=1]
+[ext_resource path="res://Resources/wizard spritesheet calciumtrice.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 8, 16 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "attack"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/attack_female:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "death"
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/death_female:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "deflect"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/deflect_female:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "idle"
+length = 1.973
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/idle_female:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "move_left"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/moving_left_female:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "move_right"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/moving_right_female:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "attack"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/attack_male:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "death"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/death_male:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "deflect"
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/deflect_male:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "idle"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/idle_male:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "move_left"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/moving_left_male:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "move_right"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/moving_right_male:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+}
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 1 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="idle_female" type="Sprite" parent="TextureRect"]
+position = Vector2( 16, 16 )
+texture = ExtResource( 2 )
+hframes = 10
+frame = 5
+region_enabled = true
+region_rect = Rect2( -1, 160, 320, 32 )
+
+[node name="moving_right_female" type="Sprite" parent="TextureRect"]
+visible = false
+position = Vector2( 16, 16 )
+texture = ExtResource( 2 )
+hframes = 10
+frame = 9
+region_enabled = true
+region_rect = Rect2( -1, 224, 320, 32 )
+
+[node name="moving_left_female" type="Sprite" parent="TextureRect"]
+visible = false
+position = Vector2( 16, 16 )
+texture = ExtResource( 2 )
+flip_h = true
+hframes = 10
+frame = 9
+region_enabled = true
+region_rect = Rect2( -1, 224, 320, 32 )
+
+[node name="attack_female" type="Sprite" parent="TextureRect"]
+visible = false
+position = Vector2( 16, 16 )
+texture = ExtResource( 2 )
+hframes = 10
+frame = 1
+region_enabled = true
+region_rect = Rect2( -1, 256, 320, 32 )
+
+[node name="deflect_female" type="Sprite" parent="TextureRect"]
+visible = false
+position = Vector2( 16, 16 )
+texture = ExtResource( 2 )
+hframes = 10
+frame = 9
+region_enabled = true
+region_rect = Rect2( -1, 192, 320, 32 )
+
+[node name="death_female" type="Sprite" parent="TextureRect"]
+visible = false
+position = Vector2( 16, 16 )
+texture = ExtResource( 2 )
+hframes = 10
+frame = 9
+region_enabled = true
+region_rect = Rect2( -1, 288, 320, 32 )
+
+[node name="idle_male" type="Sprite" parent="TextureRect"]
+visible = false
+position = Vector2( 16, 16 )
+texture = ExtResource( 2 )
+hframes = 10
+frame = 5
+region_enabled = true
+region_rect = Rect2( -1, 0, 320, 32 )
+
+[node name="moving_right_male" type="Sprite" parent="TextureRect"]
+visible = false
+position = Vector2( 16, 16 )
+texture = ExtResource( 2 )
+hframes = 10
+frame = 9
+region_enabled = true
+region_rect = Rect2( -1, 64, 320, 32 )
+
+[node name="moving_left_male" type="Sprite" parent="TextureRect"]
+visible = false
+position = Vector2( 16, 16 )
+texture = ExtResource( 2 )
+flip_h = true
+hframes = 10
+frame = 9
+region_enabled = true
+region_rect = Rect2( -1, 64, 320, 32 )
+
+[node name="attack_male" type="Sprite" parent="TextureRect"]
+visible = false
+position = Vector2( 16, 16 )
+texture = ExtResource( 2 )
+hframes = 10
+frame = 9
+region_enabled = true
+region_rect = Rect2( -1, 96, 320, 32 )
+
+[node name="deflect_male" type="Sprite" parent="TextureRect"]
+visible = false
+position = Vector2( 16, 16 )
+texture = ExtResource( 2 )
+hframes = 10
+frame = 9
+region_enabled = true
+region_rect = Rect2( -1, 32, 320, 32 )
+
+[node name="death_male" type="Sprite" parent="TextureRect"]
+visible = false
+position = Vector2( 16, 16 )
+texture = ExtResource( 2 )
+hframes = 10
+frame = 9
+region_enabled = true
+region_rect = Rect2( -1, 128, 320, 32 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource( 1 )
+
+[node name="AnimationPlayerFemale" type="AnimationPlayer" parent="."]
+autoplay = "idle"
+anims/attack = SubResource( 2 )
+anims/death = SubResource( 3 )
+anims/deflect = SubResource( 4 )
+anims/idle = SubResource( 5 )
+anims/move_left = SubResource( 6 )
+anims/move_right = SubResource( 7 )
+
+[node name="AnimationPlayerMale" type="AnimationPlayer" parent="."]
+autoplay = "idle"
+anims/attack = SubResource( 8 )
+anims/death = SubResource( 10 )
+anims/deflect = SubResource( 9 )
+anims/idle = SubResource( 11 )
+anims/move_left = SubResource( 12 )
+anims/move_right = SubResource( 13 )
