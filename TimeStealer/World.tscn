@@ -5,8 +5,7 @@
 
 [node name="Node2D" type="Node2D"]
 
-[node name="KinematicBody2D" parent="." instance=ExtResource( 1 )]
-visible = false
-position = Vector2( 150.045, 364.986 )
-
 [node name="Map" parent="." instance=ExtResource( 2 )]
+
+[node name="KinematicBody2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 150.045, 364.986 )
