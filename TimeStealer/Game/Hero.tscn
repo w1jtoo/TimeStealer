@@ -5,7 +5,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5.26083, 5.5332 )
 
-[sub_resource type="StreamTexture" id=4]
+[sub_resource type="StreamTexture" id=2]
 load_path = "res://.import/Standard sprites upd.png-0ffb16334d37d1c18ad2e945a233078b.stex"
 
 [sub_resource type="Animation" id=3]
@@ -43,7 +43,7 @@ __meta__ = {
 
 [node name="Standard sprites upd" type="Sprite" parent="TextureRect"]
 position = Vector2( 7.56296, -7.56299 )
-texture = SubResource( 4 )
+texture = SubResource( 2 )
 hframes = 6
 frame = 1
 region_enabled = true

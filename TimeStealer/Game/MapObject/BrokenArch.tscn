@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Resources/Arch.png" type="Texture" id=1]
+
+[node name="BrokenArch" type="StaticBody2D"]
+
+[node name="Arch" type="Sprite" parent="."]
+position = Vector2( -3.2, -40 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 80, 0, 80, 96 )
+
+[node name="Right" type="CollisionPolygon2D" parent="."]
+position = Vector2( 103.8, -23 )
+polygon = PoolVector2Array( -83, 19, -67, 19, -67, 31, -83, 31 )
+
+[node name="Left" type="CollisionPolygon2D" parent="."]
+position = Vector2( 39.8, -23 )
+polygon = PoolVector2Array( -83, 20, -67, 19, -67, 31, -83, 31 )
