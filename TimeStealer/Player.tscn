@@ -16,6 +16,7 @@ enum {
 }
 
 var state = MOVE
+var time_health = 100
 
 const ACCELERATION = 500
 const MAX_SPEED = 150
@@ -25,10 +26,9 @@ var velocity = Vector2.ZERO
 var sex = Male
 var previousTextureId = 0
 
-var attack_cooldown_time = 1000
+var attack_cooldown_time = 1050
 var next_attack_time = 0
 var attack_damage = 30
-var attack_playing = false
 onready var animationPlayer = $AnimationPlayerMale
 
 onready var animationPlayerMale = $AnimationPlayerMale
@@ -44,20 +44,6 @@ func _ready():
 		animationPlayer = animationPlayerFemale
 	textures[previousTextureId].show()
 
-#func _unhandled_input(event):
-	#match event.get_class():
-		#\"InputEventKey\":
-			#if Input.is_action_just_pressed(\"ui_right\"):
-				#print(\"attack has pressed\")
-				# Check if player can attack
-				#var now = OS.get_ticks_msec()
-				#if now >= next_attack_time:
-					# Play attack animation
-					#attack_playing = true
-					# var animation = get_animation_direction(last_direction) + \"_attack\"
-					#animationPlayer.play(\"attack\")
-					# Add cooldown time to current time
-					#next_attack_time = now + attack_cooldown_time
 
 func _process(delta):
 	match state:
@@ -70,26 +56,27 @@ func _process(delta):
 
 func attack_state(delta):
 	$HandShapeAttack.force_raycast_update()
-	var target = $HandShapeAttack.get_collider()
 	var now = OS.get_ticks_msec()
-	if $HandShapeAttack.is_colliding() and now >= next_attack_time:
-		next_attack_time = now + 1050
-		print(\"ATTACK SUCCESS\")
-		#target.hit(attack_damage)
-	
-	#var input_vector = Vector2.ZERO
-	#input_vector.x = Input.get_action_strength(\"ui_right\") - Input.get_action_strength(\"ui_left\")
-	#input_vector.y = Input.get_action_strength(\"ui_down\") - Input.get_action_strength(\"ui_up\")
-	#input_vector = input_vector.normalized()
-	
-	#if input_vector.x > 0:
-	#	animationPlayer.play(\"attack\")
-	#else:
-		#var left_attack = $TextureRect/attack_male.flip_h
-	
-	animationPlayer.play(\"attack\")
-	velocity = Vector2.ZERO
-	showTexture(3)
+	if now >= next_attack_time:
+		if $HandShapeAttack.is_colliding():
+			next_attack_time = now + attack_cooldown_time
+			print(\"ATTACK SUCCESS\")
+			#var target = $HandShapeAttack.get_collider()
+			#target.hit(attack_damage)
+		
+		#var input_vector = Vector2.ZERO
+		#input_vector.x = Input.get_action_strength(\"ui_right\") - Input.get_action_strength(\"ui_left\")
+		#input_vector.y = Input.get_action_strength(\"ui_down\") - Input.get_action_strength(\"ui_up\")
+		#input_vector = input_vector.normalized()
+		
+		#if input_vector.x > 0:
+		#	animationPlayer.play(\"attack\")
+		#else:
+			#var left_attack = $TextureRect/attack_male.flip_h
+		
+		animationPlayer.play(\"attack\")
+		velocity = Vector2.ZERO
+		showTexture(3)
 	
 
 func attack_animation_finished():
@@ -123,10 +110,11 @@ func move_state(delta):
 		showTexture(0)
 	
 	if velocity != Vector2.ZERO:
-		$HandShapeAttack.cast_to = velocity.normalized() * 16
+		$HandShapeAttack.cast_to = velocity.normalized() * 6
 	
 	if Input.is_action_just_pressed(\"attack\"):
 		state = ATTACK
+
 
 func showTexture(textureId):
 	if textureId != previousTextureId:
@@ -134,10 +122,24 @@ func showTexture(textureId):
 		textures[previousTextureId].hide()
 		textures[textureId].show()
 		previousTextureId = textureId
+
+
+func hit(damage):
+	time_health -= damage
+	if time_health <= 0:
+		dead()
+	
+	# animation of taking damage
+
+
+func dead():
+	animationPlayer.play(\"death\")
+	showTexture(5)
+	queue_free()
 "
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 6.88224, 11.3208 )
+extents = Vector2( 6.88224, 5.63164 )
 
 [sub_resource type="Animation" id=3]
 loop = true
@@ -337,10 +339,10 @@ scale = Vector2( 4, 4 )
 script = SubResource( 1 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
-margin_left = -16.0
-margin_top = -16.0
-margin_right = 16.0
-margin_bottom = 16.0
+margin_left = -15.4737
+margin_top = -26.2631
+margin_right = 16.5263
+margin_bottom = 5.73686
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -450,6 +452,7 @@ region_enabled = true
 region_rect = Rect2( -1, 128, 320, 32 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.263153, -3.8147e-06 )
 shape = SubResource( 2 )
 
 [node name="AnimationPlayerFemale" type="AnimationPlayer" parent="."]
@@ -471,6 +474,7 @@ anims/move_left = SubResource( 13 )
 anims/move_right = SubResource( 14 )
 
 [node name="HandShapeAttack" type="RayCast2D" parent="."]
+scale = Vector2( 3, 3 )
 enabled = true
-cast_to = Vector2( 0, 16 )
+cast_to = Vector2( 0, 6 )
 collide_with_areas = true
