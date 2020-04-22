@@ -260,6 +260,7 @@ __meta__ = {
 }
 
 [node name="idle_female" type="Sprite" parent="TextureRect"]
+visible = false
 position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 10
