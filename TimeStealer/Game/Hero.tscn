@@ -25,7 +25,7 @@ tracks/0/keys = {
 }
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
-position = Vector2( 258.387, 213.348 )
+scale = Vector2( 5, 5 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

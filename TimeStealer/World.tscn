@@ -8,4 +8,5 @@
 [node name="Map" parent="." instance=ExtResource( 2 )]
 
 [node name="KinematicBody2D" parent="." instance=ExtResource( 1 )]
-position = Vector2( 88, 440 )
+position = Vector2( 150.045, 364.986 )
+scale = Vector2( 1, 1 )

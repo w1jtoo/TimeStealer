@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Resources/boss/sorcerer villain.png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 64, 40 )
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Boss" type="KinematicBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boss"]
+shape = SubResource( 1 )
+
+[node name="TextureRect" type="TextureRect" parent="Boss"]
+margin_left = -64.0
+margin_top = -160.0
+margin_right = 64.0
+margin_bottom = 32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="sorcerer villain" type="Sprite" parent="Boss/TextureRect"]
+position = Vector2( 72, 16 )
+scale = Vector2( 3.84, 3.84 )
+texture = ExtResource( 1 )
+hframes = 10
