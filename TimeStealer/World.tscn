@@ -1,9 +1,17 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Game/Hero.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Wizard.tscn" type="PackedScene" id=4]
 
 [node name="Node2D" type="Node2D"]
 
 [node name="KinematicBody2D" parent="." instance=ExtResource( 1 )]
 position = Vector2( 150.045, 364.986 )
 scale = Vector2( 1, 1 )
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+
+[node name="Wizard" parent="." instance=ExtResource( 4 )]
+position = Vector2( 492.448, 154.874 )
+collision/safe_margin = 123.95
