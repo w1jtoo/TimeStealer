@@ -1,0 +1,277 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://Resources/wizard/wizard death.png" type="Texture" id=1]
+[ext_resource path="res://Resources/wizard/wizard idle.png" type="Texture" id=2]
+[ext_resource path="res://Resources/wizard/wizard fly forward.png" type="Texture" id=3]
+[ext_resource path="res://Resources/wizard/wizard attack.png" type="Texture" id=4]
+[ext_resource path="res://Wizard.gd" type="Script" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 32, 16 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "wizard_attack"
+length = 1.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/wizard_attack:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4, 3, 2, 1, 0 ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 1.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/wizard_attack_right:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 4, 3, 2, 1, 0 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "wizard_death"
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/wizard_death:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "wizard_idle"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/wizard idle:frame")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 5, 4, 3, 2, 1, 0 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "wizard_move"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/wizard_move:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 4, 5 ]
+}
+
+[sub_resource type="Animation" id=7]
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/wizard_move:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[sub_resource type="Animation" id=8]
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/wizard_move:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 3, 2, 1, 0 ]
+}
+
+[sub_resource type="Animation" id=9]
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/wizard_move_right:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 4, 5 ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "wizard_move_right_start"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/wizard_move_right:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[sub_resource type="Animation" id=11]
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/wizard_move_right:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 3, 2, 1, 0 ]
+}
+
+[sub_resource type="CapsuleShape2D" id=12]
+radius = 256.0
+height = 256.0
+
+[sub_resource type="CapsuleShape2D" id=13]
+radius = 160.0
+height = 256.0
+
+[node name="Wizard" type="KinematicBody2D"]
+script = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = -64.0
+margin_top = -96.0
+margin_right = 64.0
+margin_bottom = 32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="wizard_attack_right" type="Sprite" parent="TextureRect"]
+visible = false
+position = Vector2( 64, 64 )
+scale = Vector2( 1.6, 1.6 )
+texture = ExtResource( 4 )
+flip_h = true
+vframes = 2
+hframes = 8
+region_enabled = true
+region_rect = Rect2( 0, 0, 647, 160 )
+
+[node name="wizard_attack" type="Sprite" parent="TextureRect"]
+visible = false
+position = Vector2( 64, 64 )
+scale = Vector2( 1.6, 1.6 )
+texture = ExtResource( 4 )
+vframes = 2
+hframes = 8
+region_enabled = true
+region_rect = Rect2( 0, 0, 647, 160 )
+
+[node name="wizard_death" type="Sprite" parent="TextureRect"]
+visible = false
+position = Vector2( 64, 64 )
+scale = Vector2( 1.6, 1.6 )
+texture = ExtResource( 1 )
+hframes = 10
+frame = 8
+
+[node name="wizard_move" type="Sprite" parent="TextureRect"]
+visible = false
+position = Vector2( 64, 64 )
+scale = Vector2( 1.6, 1.6 )
+texture = ExtResource( 3 )
+hframes = 6
+frame = 4
+
+[node name="wizard_move_right" type="Sprite" parent="TextureRect"]
+visible = false
+position = Vector2( 64, 64 )
+scale = Vector2( 1.6, 1.6 )
+texture = ExtResource( 3 )
+flip_h = true
+hframes = 6
+frame = 3
+
+[node name="wizard idle" type="Sprite" parent="TextureRect"]
+visible = false
+position = Vector2( 64, 64 )
+scale = Vector2( 1.6, 1.6 )
+texture = ExtResource( 2 )
+hframes = 10
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/wizard_attack = SubResource( 2 )
+anims/wizard_attack_right = SubResource( 3 )
+anims/wizard_death = SubResource( 4 )
+anims/wizard_idle = SubResource( 5 )
+anims/wizard_move = SubResource( 6 )
+anims/wizard_move_left_start = SubResource( 7 )
+anims/wizard_move_left_stop = SubResource( 8 )
+anims/wizard_move_right = SubResource( 9 )
+anims/wizard_move_right_start = SubResource( 10 )
+anims/wizard_move_right_stop = SubResource( 11 )
+
+[node name="SearchArea" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SearchArea"]
+rotation = 1.5708
+shape = SubResource( 12 )
+one_way_collision_margin = 0.0
+
+[node name="AttackArea" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="AttackArea"]
+rotation = 1.5708
+shape = SubResource( 13 )
+one_way_collision_margin = 0.0
+[connection signal="body_entered" from="SearchArea" to="." method="_on_Player_body_entered_search"]
+[connection signal="body_exited" from="SearchArea" to="." method="_on_Player_body_exited_search"]
+[connection signal="body_entered" from="AttackArea" to="." method="_on_Player_body_entered"]
+[connection signal="body_exited" from="AttackArea" to="." method="_on_Player_body_exited"]

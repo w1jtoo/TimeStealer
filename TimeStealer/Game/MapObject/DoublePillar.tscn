@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Resources/Pillar.png" type="Texture" id=1]
+
+[node name="DoublePillar" type="StaticBody2D"]
+
+[node name="Pillar" type="Sprite" parent="."]
+position = Vector2( 0.599998, -31 )
+scale = Vector2( 1.01389, 1 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 64, 0, 32, 80 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( -45.4, -75 )
+scale = Vector2( 0.395531, 0.211511 )
+polygon = PoolVector2Array( 75.8475, 293.129, 156.751, 293.129, 156.751, 397.143, 75.8475, 397.143 )
