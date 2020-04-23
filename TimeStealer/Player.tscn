@@ -12,7 +12,8 @@ enum {
 
 enum {
 	MOVE,
-	ATTACK
+	ATTACK,
+	DEAD
 }
 
 var state = MOVE
@@ -56,6 +57,9 @@ func _physics_process(delta):
 		
 		ATTACK:
 			attack_state(delta)
+		
+		DEAD:
+			pass
 
 
 func attack_state(delta):
@@ -127,10 +131,11 @@ func showTexture(textureId):
 
 
 func hit(damage):
-	time_health -= damage
-	#print('Player got 30 damage, time left:', time_health)
-	if time_health <= 0:
-		dead()
+	# print('Player got 30 damage, time left:', time_health)
+	if time_health > 0:
+		time_health -= damage
+		if time_health <= 0:
+			dead()
 	
 	# animation of taking damage
 
@@ -138,6 +143,7 @@ func hit(damage):
 func dead():
 	animationPlayer.play(\"death\")
 	showTexture(4)
+	state = DEAD
 	# queue_free()
 "
 
@@ -249,7 +255,6 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=9]
-loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/death_male:frame")
 tracks/0/interp = 1
@@ -362,7 +367,6 @@ visible = false
 position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 10
-frame = 9
 region_enabled = true
 region_rect = Rect2( -1, 288, 320, 32 )
 
