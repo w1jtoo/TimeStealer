@@ -97,6 +97,7 @@ func attack(target):
 	
 func hit(damage):
 	time -= damage
+	#print('Wisard got 30 damage, time left:', time)
 	if time <= 0:
 		deathTime = 20
 		

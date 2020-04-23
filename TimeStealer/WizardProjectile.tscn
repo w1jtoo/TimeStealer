@@ -70,7 +70,6 @@ visible = false
 position = Vector2( 7, 3 )
 texture = ExtResource( 1 )
 vframes = 4
-frame = 3
 region_enabled = true
 region_rect = Rect2( 0, 0, 16, 32 )
 
