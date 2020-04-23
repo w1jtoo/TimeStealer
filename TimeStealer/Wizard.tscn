@@ -218,6 +218,7 @@ position = Vector2( 64, 64 )
 scale = Vector2( 1.6, 1.6 )
 texture = ExtResource( 1 )
 hframes = 10
+frame = 8
 
 [node name="wizard_move" type="Sprite" parent="TextureRect"]
 visible = false

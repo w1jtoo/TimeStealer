@@ -1,0 +1,87 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Door.gd" type="Script" id=1]
+[ext_resource path="res://Resources/stone_door.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 128, 16 )
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 160.0
+height = 224.001
+
+[sub_resource type="Animation" id=4]
+resource_name = "close"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/stone_door:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 7, 6, 5, 4, 3, 2, 1, 0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "open"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/stone_door:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+}
+
+[node name="Door" type="StaticBody2D"]
+script = ExtResource( 1 )
+opened = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 129, -32, 129, 0, 52, 0, 52, -32 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -16 )
+shape = SubResource( 1 )
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+position = Vector2( -224, 0 )
+polygon = PoolVector2Array( 173, -32, 173, 0, 96, 0, 96, -32 )
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2( 0, -16 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+rotation = 1.5708
+shape = SubResource( 2 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="stone_door" type="Sprite" parent="TextureRect"]
+position = Vector2( 0.25, -155.24 )
+scale = Vector2( 3.23418, 3.23418 )
+texture = ExtResource( 2 )
+hframes = 8
+frame = 7
+region_enabled = true
+region_rect = Rect2( 0, 0, 640, 96 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "open"
+anims/close = SubResource( 4 )
+anims/open = SubResource( 3 )
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

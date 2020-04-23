@@ -1,0 +1,87 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Resources/boss/projectile.png" type="Texture" id=1]
+[ext_resource path="res://Resources/boss/projectile_destruction.png" type="Texture" id=2]
+[ext_resource path="res://BossCharge.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16, 32 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "destruction"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/projectile_destruction:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "idle"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/projectile:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 24.0
+height = 32.0
+
+[node name="BossCharge" type="KinematicBody2D"]
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+disabled = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = -40.0
+margin_top = -40.0
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="projectile" type="Sprite" parent="TextureRect"]
+position = Vector2( 40, 40 )
+texture = ExtResource( 1 )
+hframes = 4
+region_enabled = true
+region_rect = Rect2( 0, 0, 256, 72 )
+
+[node name="projectile_destruction" type="Sprite" parent="TextureRect"]
+visible = false
+position = Vector2( 40, 40 )
+texture = ExtResource( 2 )
+hframes = 4
+frame = 3
+region_enabled = true
+region_rect = Rect2( 0, 0, 256, 64 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/destruction = SubResource( 2 )
+anims/idle = SubResource( 3 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 4 )
+[connection signal="body_entered" from="Area2D" to="." method="_on_Player_body_entered"]

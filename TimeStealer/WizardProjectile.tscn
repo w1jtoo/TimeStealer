@@ -1,12 +1,51 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Resources/wizard/projectile.png" type="Texture" id=1]
+[ext_resource path="res://Resources/wizard/projectile_destruction.png" type="Texture" id=1]
 [ext_resource path="res://WizardProjectile.gd" type="Script" id=2]
+[ext_resource path="res://Resources/wizard/projectile_idle.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 7, 3 )
 
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 4.0
+height = 11.0
+
+[sub_resource type="Animation" id=3]
+resource_name = "death"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/projectile_destruction:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "idle"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/projectile_idle:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
 [node name="WizardProjectile" type="KinematicBody2D"]
+scale = Vector2( 2, 2 )
 script = ExtResource( 2 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -18,9 +57,34 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="projectile" type="Sprite" parent="TextureRect"]
+[node name="projectile_idle" type="Sprite" parent="TextureRect"]
+position = Vector2( 7, 3 )
+texture = ExtResource( 3 )
+vframes = 4
+frame = 3
+region_enabled = true
+region_rect = Rect2( 0, 0, 16, 32 )
+
+[node name="projectile_destruction" type="Sprite" parent="TextureRect"]
+visible = false
 position = Vector2( 7, 3 )
 texture = ExtResource( 1 )
+vframes = 4
+frame = 3
+region_enabled = true
+region_rect = Rect2( 0, 0, 16, 32 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+disabled = true
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+rotation = 1.5708
+shape = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/death = SubResource( 3 )
+anims/idle = SubResource( 4 )
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

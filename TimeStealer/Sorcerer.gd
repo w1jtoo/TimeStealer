@@ -7,18 +7,16 @@ extends KinematicBody2D
 
 onready var animationPlayer = $AnimationPlayer
 var previousTextureId = 0
-onready var rect = $TextureRect
-onready var textures = [$"TextureRect/wizard idle", $TextureRect/wizard_move, $TextureRect/wizard_attack, $TextureRect/wizard_death]
-var attack_cooldown = 0
-var targets = []
-var attackTargets = []
-var projectileGenerator = preload("res://WizardProjectile.tscn")
-var projectileCount = 0
+onready var textures = [$TextureRect/idle, $TextureRect/boss_attack, $TextureRect/death]
 
+var projectileGenerator = preload("res://BossCharge.tscn")
+var projectileCount = 0
 var velocity = Vector2.ZERO
 
+var attack_cooldown = 0
 var time = 100
 var deathTime = 0
+var attackTargets = []
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -34,9 +32,8 @@ func _physics_process(delta):
 	if time <= 0:
 		if deathTime > 0:
 			deathTime -= 1
-			showTexture(3)
-			animationPlayer.play("wizard_death")
-			return
+			showTexture(2)
+			animationPlayer.play("death")
 		else:
 			self.get_parent().remove_child(self)
 		
@@ -48,8 +45,8 @@ func _physics_process(delta):
 			attack_cooldown = -30
 		else:
 			attack_cooldown +=1
-			animationPlayer.play("wizard_attack")
-			showTexture(2)
+			animationPlayer.play("attack")
+			showTexture(1)
 			
 		if attack_cooldown == 0:
 			var index = 0
@@ -60,41 +57,24 @@ func _physics_process(delta):
 					index = i
 			if len(attackTargets) > index:
 				attack(attackTargets[index])
-	elif len(targets) > 0 and attack_cooldown >= 0:
-		var index = 0
-		var minDist = -1
-		for i in range(len(targets)):
-			var sqr = self.position.distance_squared_to(targets[i].position)
-			if 100 < sqr && (minDist == -1 || sqr < minDist):
-				minDist = self.position.distance_squared_to(targets[i].position)
-				index = i
-			
-		if velocity != Vector2.ZERO and attack_cooldown >= 0:
-			animationPlayer.play("wizard_move")
-			showTexture(1)
-		if minDist != -1:
-			var dirVector = (targets[index].position - self.position).normalized()
-			velocity = dirVector * 40
-		else:
-			velocity *= 0.7
-		velocity = move_and_slide(velocity)
 	else:
 		attack_cooldown = 0
 		showTexture(0)
-		animationPlayer.play("wizard_idle")
+		animationPlayer.play("idle")
 		
+	
 func attack(target):
 	var dir = (target.position - self.position).normalized()
 	var projectile = projectileGenerator.instance()
 	projectile.wizard = self
-	projectile.velocity = dir * 200
-	projectile.position = position + dir*30
+	projectile.velocity = dir * 200 - Vector2.UP * 90
+	projectile.position = position + dir*30+Vector2.UP * 90
 	projectileCount+=1
 	projectile.timeOut = 50
 	self.attack_cooldown = 40
-	self.get_parent().add_child(projectile,true)#"PROJECTILE"+str(projectileCount)+"ID"+str(self.get_rid())
+	self.get_parent().add_child(projectile,true)
 	
-	
+
 func hit(damage):
 	time -= damage
 	if time <= 0:
@@ -118,11 +98,3 @@ func _on_Player_body_entered(body):
 func _on_Player_body_exited(body):
 	if body in attackTargets:
 		attackTargets.remove(attackTargets.find(body))
-
-func _on_Player_body_exited_search(body):
-	if body in targets:
-		targets.remove(targets.find(body))
-
-func _on_Player_body_entered_search(body):
-	if  body.get_name() == "Player":
-		targets.append(body)
