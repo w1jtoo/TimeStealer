@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Map.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Wizard.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Pusher.tscn" type="PackedScene" id=4]
 
 [node name="YSort" type="YSort"]
 
@@ -13,12 +12,8 @@ position = Vector2( 120.475, 508.143 )
 [node name="Map" parent="." instance=ExtResource( 2 )]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 241.5, 545.396 )
+position = Vector2( 96, 344 )
 scale = Vector2( 1, 1 )
 
 [node name="Wizard" parent="." instance=ExtResource( 3 )]
 position = Vector2( 136, 88 )
-
-[node name="Pusher2" parent="." instance=ExtResource( 4 )]
-position = Vector2( 159.627, 506.514 )
-side = 1
