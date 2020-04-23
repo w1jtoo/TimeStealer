@@ -36,6 +36,7 @@ func _physics_process(delta):
 			deathTime -= 1
 			showTexture(3)
 			animationPlayer.play("wizard_death")
+			return
 		else:
 			self.get_parent().remove_child(self)
 		
