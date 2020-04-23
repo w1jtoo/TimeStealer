@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Resources/Castle/light3.png" type="Texture" id=1]
+[ext_resource path="res://Game/MapObject/Light.gd" type="Script" id=2]
+[ext_resource path="res://Resources/Castle/decorative.png" type="Texture" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Idle"
@@ -19,13 +21,29 @@ tracks/0/keys = {
 "values": [ 0, 1, 2 ]
 }
 
+[sub_resource type="Animation" id=2]
+resource_name = "Off"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
 [node name="Light" type="StaticBody2D"]
+script = ExtResource( 2 )
+isGlowing = false
 
 [node name="light3" type="Sprite" parent="."]
 position = Vector2( 0, -21 )
 texture = ExtResource( 1 )
 hframes = 3
-frame = 2
 region_enabled = true
 region_rect = Rect2( 0, 0, 48, 48 )
 
@@ -33,6 +51,13 @@ region_rect = Rect2( 0, 0, 48, 48 )
 position = Vector2( -48, -85 )
 polygon = PoolVector2Array( 43, 85, 48, 82, 52, 85, 51, 88, 45, 88 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="Light" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
 anims/Idle = SubResource( 1 )
+anims/Off = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -13 )
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 432, 80, 16, 32 )
