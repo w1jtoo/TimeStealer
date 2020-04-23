@@ -48,9 +48,10 @@ func _physics_process(delta):
 	else:
 		animationPlayer.play("idle")
 		
-	var newVelocity = move_and_slide(velocity)
-	if newVelocity != velocity:
-		isDestructing = true
+	#var newVelocity = move_and_slide(velocity)
+	#if newVelocity != velocity:
+	#	isDestructing = true
+	velocity = move_and_slide(velocity)
 
 
 func _on_Area2D_body_entered(body):

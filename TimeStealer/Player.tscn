@@ -49,7 +49,7 @@ func _ready():
 	textures[previousTextureId].show()
 
 
-func _process(delta):
+func _physics_process(delta):
 	match state:
 		MOVE:
 			move_state(delta)
@@ -64,9 +64,10 @@ func attack_state(delta):
 	if now >= next_attack_time:
 		if $HandShapeAttack.is_colliding():
 			next_attack_time = now + attack_cooldown_time
-			print(\"ATTACK SUCCESS\")
-			#var target = $HandShapeAttack.get_collider()
-			#target.hit(attack_damage)
+			# print(\"ATTACK SUCCESS\")
+			var target = $HandShapeAttack.get_collider().get_parent()
+			if target.name == 'Wizard':
+				target.hit(attack_damage)
 		
 		#var input_vector = Vector2.ZERO
 		#input_vector.x = Input.get_action_strength(\"ui_right\") - Input.get_action_strength(\"ui_left\")
@@ -110,8 +111,8 @@ func move_state(delta):
 		animationPlayer.play(\"idle\")
 		showTexture(0)
 	
-	if velocity != Vector2.ZERO:
-		$HandShapeAttack.cast_to = velocity.normalized() * 6
+	if input_vector != Vector2.ZERO:
+		$HandShapeAttack.cast_to = input_vector * 6
 	
 	if Input.is_action_just_pressed(\"attack\"):
 		state = ATTACK
@@ -127,6 +128,7 @@ func showTexture(textureId):
 
 func hit(damage):
 	time_health -= damage
+	#print('Player got 30 damage, time left:', time_health)
 	if time_health <= 0:
 		dead()
 	
@@ -136,7 +138,7 @@ func hit(damage):
 func dead():
 	animationPlayer.play(\"death\")
 	showTexture(4)
-	queue_free()
+	# queue_free()
 "
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -218,7 +220,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/attack_male:frame")
 tracks/0/interp = 1
@@ -246,7 +248,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=9]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/death_male:frame")
@@ -261,7 +263,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=10]
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/deflect_male:frame")
 tracks/0/interp = 1
@@ -275,7 +277,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=11]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -291,7 +293,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=12]
 resource_name = "move"
 loop = true
 tracks/0/type = "value"
@@ -419,11 +421,11 @@ anims/move = SubResource( 7 )
 
 [node name="AnimationPlayerMale" type="AnimationPlayer" parent="."]
 autoplay = "idle"
-anims/attack = SubResource( 9 )
-anims/death = SubResource( 10 )
-anims/deflect = SubResource( 11 )
-anims/idle = SubResource( 12 )
-anims/move = SubResource( 13 )
+anims/attack = SubResource( 8 )
+anims/death = SubResource( 9 )
+anims/deflect = SubResource( 10 )
+anims/idle = SubResource( 11 )
+anims/move = SubResource( 12 )
 
 [node name="HandShapeAttack" type="RayCast2D" parent="."]
 scale = Vector2( 3, 3 )
