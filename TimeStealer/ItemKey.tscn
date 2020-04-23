@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Resources/Dungeon Collectables.png" type="Texture" id=1]
+[ext_resource path="res://ItemKey.gd" type="Script" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 13.0
+height = 12.0
+
+[sub_resource type="Animation" id=2]
+resource_name = "shine"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/Dungeon Collectables:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+
+[node name="ItemKey" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = -32.0
+margin_top = -32.0
+margin_right = 32.0
+margin_bottom = 32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dungeon Collectables" type="Sprite" parent="TextureRect"]
+position = Vector2( 32, 32 )
+texture = ExtResource( 1 )
+hframes = 6
+frame = 5
+region_enabled = true
+region_rect = Rect2( -1, 80, 96, 16 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "shine"
+anims/shine = SubResource( 2 )

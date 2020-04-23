@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Standard sprites upd.png-7b2c823dee7c7d2690e0a503f83b9171.stex"
+path="res://.import/assets_dungeon.png-088d2c1810992f2f466752e4dcab3697.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/Castle/PSD/Resources/Standard sprites upd.png"
-dest_files=[ "res://.import/Standard sprites upd.png-7b2c823dee7c7d2690e0a503f83b9171.stex" ]
+source_file="res://Resources/assets_dungeon.png"
+dest_files=[ "res://.import/assets_dungeon.png-088d2c1810992f2f466752e4dcab3697.stex" ]
 
 [params]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Resources/wizard spritesheet calciumtrice.png" type="Texture" id=2]
 
@@ -29,6 +29,9 @@ var previousTextureId = 0
 var attack_cooldown_time = 1050
 var next_attack_time = 0
 var attack_damage = 30
+
+var items = []
+
 onready var animationPlayer = $AnimationPlayerMale
 
 onready var animationPlayerMale = $AnimationPlayerMale
@@ -137,6 +140,12 @@ func dead():
 	animationPlayer.play(\"death\")
 	showTexture(4)
 	queue_free()
+
+
+func _on_item_entered(body):
+	if body.get_name().begins_with(\"Item\"):
+		items.append(body)
+		body.get_parent().remove_child(body)
 "
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -218,7 +227,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/attack_male:frame")
 tracks/0/interp = 1
@@ -246,7 +255,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=9]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/death_male:frame")
@@ -261,7 +270,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=10]
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/deflect_male:frame")
 tracks/0/interp = 1
@@ -275,7 +284,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=11]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -291,7 +300,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=12]
 resource_name = "move"
 loop = true
 tracks/0/type = "value"
@@ -306,6 +315,9 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
+
+[sub_resource type="CircleShape2D" id=13]
+radius = 24.5115
 
 [node name="Player" type="KinematicBody2D"]
 scale = Vector2( 4, 4 )
@@ -419,11 +431,11 @@ anims/move = SubResource( 7 )
 
 [node name="AnimationPlayerMale" type="AnimationPlayer" parent="."]
 autoplay = "idle"
-anims/attack = SubResource( 9 )
-anims/death = SubResource( 10 )
-anims/deflect = SubResource( 11 )
-anims/idle = SubResource( 12 )
-anims/move = SubResource( 13 )
+anims/attack = SubResource( 8 )
+anims/death = SubResource( 9 )
+anims/deflect = SubResource( 10 )
+anims/idle = SubResource( 11 )
+anims/move = SubResource( 12 )
 
 [node name="HandShapeAttack" type="RayCast2D" parent="."]
 scale = Vector2( 3, 3 )
@@ -436,3 +448,9 @@ current = true
 zoom = Vector2( 4, 4 )
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 13 )
+[connection signal="body_entered" from="Area2D" to="." method="_on_item_entered"]
