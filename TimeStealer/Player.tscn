@@ -134,9 +134,9 @@ func showTexture(textureId):
 
 
 func hit(damage):
-	# print('Player got 30 damage, time left:', time_health)
 	if time_health > 0:
 		time_health -= damage
+		# print('Player got damage, time left:', time_health)
 		if time_health <= 0:
 			dead()
 	
