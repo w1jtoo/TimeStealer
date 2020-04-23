@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Resources/wizard spritesheet calciumtrice.png" type="Texture" id=2]
 
@@ -16,7 +16,7 @@ enum {
 }
 
 var state = MOVE
-var time_health = 100
+var time_health = 100000
 
 const ACCELERATION = 500
 const MAX_SPEED = 150
@@ -130,6 +130,7 @@ func showTexture(textureId):
 
 func hit(damage):
 	if time_health > 0:
+		$AnimationPlayerMale.play(\"Hit\")
 		time_health -= damage
 		# print('Player got damage, time left:', time_health)
 		if time_health <= 0:
@@ -230,6 +231,22 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=8]
+resource_name = "Hit"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/idle_male:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.2, 0.9 ),
+"transitions": PoolRealArray( 0.366021, 0.435275 ),
+"update": 1,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.384314, 0.0196078, 0.0196078, 1 ) ]
+}
+
+[sub_resource type="Animation" id=9]
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/attack_male:frame")
 tracks/0/interp = 1
@@ -257,7 +274,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/death_male:frame")
@@ -272,7 +289,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=11]
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/deflect_male:frame")
 tracks/0/interp = 1
@@ -286,7 +303,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -302,8 +319,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=12]
-resource_name = "move"
+[sub_resource type="Animation" id=13]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/moving_male:frame")
@@ -318,8 +334,8 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="CircleShape2D" id=13]
-radius = 24.5115
+[sub_resource type="CircleShape2D" id=14]
+radius = 9.05539
 
 [node name="Player" type="KinematicBody2D"]
 scale = Vector2( 4, 4 )
@@ -379,6 +395,7 @@ region_rect = Rect2( -1, 288, 320, 32 )
 
 [node name="idle_male" type="Sprite" parent="TextureRect"]
 visible = false
+modulate = Color( 0.384314, 0.0196078, 0.0196078, 1 )
 position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 10
@@ -432,11 +449,12 @@ anims/move = SubResource( 7 )
 
 [node name="AnimationPlayerMale" type="AnimationPlayer" parent="."]
 autoplay = "idle"
-anims/attack = SubResource( 8 )
-anims/death = SubResource( 9 )
-anims/deflect = SubResource( 10 )
-anims/idle = SubResource( 11 )
-anims/move = SubResource( 12 )
+anims/Hit = SubResource( 8 )
+anims/attack = SubResource( 9 )
+anims/death = SubResource( 10 )
+anims/deflect = SubResource( 11 )
+anims/idle = SubResource( 12 )
+anims/move = SubResource( 13 )
 
 [node name="HandShapeAttack" type="RayCast2D" parent="."]
 scale = Vector2( 3, 3 )
@@ -453,5 +471,5 @@ drag_margin_v_enabled = true
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 13 )
+shape = SubResource( 14 )
 [connection signal="body_entered" from="Area2D" to="." method="_on_item_entered"]

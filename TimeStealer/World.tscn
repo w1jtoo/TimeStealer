@@ -9,8 +9,8 @@
 [node name="Map" parent="." instance=ExtResource( 2 )]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 96, 344 )
+position = Vector2( 88, 1168 )
 scale = Vector2( 1, 1 )
 
 [node name="Wizard" parent="." instance=ExtResource( 3 )]
-position = Vector2( 136, 88 )
+position = Vector2( 696, 688 )

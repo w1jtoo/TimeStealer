@@ -1541,15 +1541,18 @@ position = Vector2( -120, 584 )
 [node name="Door3" parent="." instance=ExtResource( 23 )]
 position = Vector2( 224, 264 )
 scale = Vector2( 0.28513, 0.28513 )
+opened = false
 
 [node name="Door" parent="." instance=ExtResource( 23 )]
 position = Vector2( 96, 512 )
 scale = Vector2( 0.28513, 0.28513 )
+opened = false
 key = 4
 
 [node name="Door4" parent="." instance=ExtResource( 23 )]
 position = Vector2( 608, 576 )
 scale = Vector2( 0.28513, 0.28513 )
+opened = false
 key = 2
 
 [node name="Door2" parent="." instance=ExtResource( 23 )]
@@ -1581,16 +1584,16 @@ position = Vector2( -144, 1120 )
 position = Vector2( -144, 1096 )
 
 [node name="Spike17" parent="." instance=ExtResource( 24 )]
-position = Vector2( -112, 1160 )
+position = Vector2( -112, 1184 )
 
 [node name="Spike18" parent="." instance=ExtResource( 24 )]
-position = Vector2( -112, 1192 )
+position = Vector2( -112, 1216 )
 
 [node name="Spike19" parent="." instance=ExtResource( 24 )]
-position = Vector2( -80, 1160 )
+position = Vector2( -80, 1184 )
 
 [node name="Spike20" parent="." instance=ExtResource( 24 )]
-position = Vector2( -80, 1192 )
+position = Vector2( -80, 1216 )
 
 [node name="Spike2" parent="." instance=ExtResource( 24 )]
 position = Vector2( -13, 312 )
