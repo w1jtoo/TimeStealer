@@ -6,9 +6,6 @@
 
 [node name="YSort" type="YSort"]
 
-[node name="Pusher" parent="." instance=ExtResource( 4 )]
-position = Vector2( 120.475, 508.143 )
-
 [node name="Map" parent="." instance=ExtResource( 2 )]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
