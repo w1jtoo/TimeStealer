@@ -5,12 +5,15 @@
 [ext_resource path="res://Wizard.tscn" type="PackedScene" id=3]
 
 [node name="YSort" type="YSort"]
+scale = Vector2( 2, 2 )
 
 [node name="Map" parent="." instance=ExtResource( 2 )]
+scale = Vector2( 16, 16 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 88, 1168 )
-scale = Vector2( 1, 1 )
+position = Vector2( 8784, 5179.5 )
+scale = Vector2( 16, 16 )
 
 [node name="Wizard" parent="." instance=ExtResource( 3 )]
-position = Vector2( 696, 688 )
+position = Vector2( 8859.5, 2736 )
+scale = Vector2( 16, 16 )
