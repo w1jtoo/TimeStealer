@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Game/HealthBar.gd" type="Script" id=1]
 [ext_resource path="res://Resources/wizard spritesheet calciumtrice.png" type="Texture" id=2]
@@ -32,12 +32,17 @@ var attack_cooldown_time = 1050
 var next_attack_time = 0
 var attack_damage = 30
 
+var damaged_timer = 0
+
 var items = []
 
 onready var animationPlayer = $AnimationPlayerMale
 
 onready var animationPlayerMale = $AnimationPlayerMale
 onready var animationPlayerFemale = $AnimationPlayerFemale
+
+onready var textureRect = $TextureRect
+
 onready var femaleTextures = [$TextureRect/idle_female, $TextureRect/moving_female,
 	$TextureRect/attack_female, $TextureRect/deflect_female, $TextureRect/death_female]
 onready var maleTextures = [$TextureRect/idle_male, $TextureRect/moving_male,
@@ -61,6 +66,12 @@ func _process(delta):
 		time_health = max_time
 	if time_health < 0:
 		time_health = 0
+		
+	if damaged_timer > 0:
+		textureRect.modulate = Color(170/255.0,0,0,1.0)
+		damaged_timer -= 1
+	else:
+		textureRect.modulate = Color(1.0, 1.0, 1.0, 1.0)
 	
 	match state:
 		MOVE:
@@ -142,6 +153,7 @@ func hit(damage):
 		$AnimationPlayerMale.play(\"Hit\")
 		time_health -= damage
 		emit_signal(\"damaged\",time_health, max_time)
+		damaged_timer = 20
 		# print('Player got damage, time left:', time_health)
 		if time_health <= 0:
 			dead()
@@ -242,22 +254,6 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
-}
-
-[sub_resource type="Animation" id=8]
-resource_name = "Hit"
-length = 6.0
-tracks/0/type = "value"
-tracks/0/path = NodePath("TextureRect/idle_male:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0.2, 0.9 ),
-"transitions": PoolRealArray( 0.366021, 0.435275 ),
-"update": 1,
-"values": [ Color( 1, 1, 1, 1 ), Color( 0.384314, 0.0196078, 0.0196078, 1 ) ]
 }
 
 [sub_resource type="Animation" id=9]
@@ -416,7 +412,6 @@ region_enabled = true
 region_rect = Rect2( -1, 288, 320, 32 )
 
 [node name="idle_male" type="Sprite" parent="TextureRect"]
-modulate = Color( 0.384314, 0.0196078, 0.0196078, 1 )
 position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 10
@@ -437,6 +432,7 @@ visible = false
 position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 10
+frame = 9
 region_enabled = true
 region_rect = Rect2( -1, 96, 320, 32 )
 
@@ -470,7 +466,6 @@ anims/move = SubResource( 7 )
 
 [node name="AnimationPlayerMale" type="AnimationPlayer" parent="."]
 autoplay = "idle"
-anims/Hit = SubResource( 8 )
 anims/attack = SubResource( 9 )
 anims/death = SubResource( 10 )
 anims/deflect = SubResource( 11 )

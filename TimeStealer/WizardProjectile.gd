@@ -31,7 +31,7 @@ onready var collider = $CollisionShape2D
 func _physics_process(delta):	
 	var angle = -velocity.angle_to(Vector2.LEFT)
 	collider.rotation = angle
-	area.rotation = angle
+	area.rotation = angle+PI/2
 	if len(textures) > previousTextureId:
 		textures[previousTextureId].rotation = angle
 	

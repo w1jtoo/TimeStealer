@@ -8,8 +8,8 @@
 extents = Vector2( 5, 1.5 )
 
 [sub_resource type="CapsuleShape2D" id=2]
-radius = 4.0
-height = 11.0
+radius = 9.49998
+height = 10.0
 
 [sub_resource type="Animation" id=3]
 resource_name = "death"
