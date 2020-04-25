@@ -11,7 +11,7 @@ scale = Vector2( 2, 2 )
 scale = Vector2( 16, 16 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 8784, 5179.5 )
+position = Vector2( -281, 5407.5 )
 scale = Vector2( 16, 16 )
 
 [node name="Wizard" parent="." instance=ExtResource( 3 )]
