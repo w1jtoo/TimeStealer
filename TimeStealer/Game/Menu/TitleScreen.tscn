@@ -1,0 +1,88 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Game/Menu/Buttons/NewGameButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Game/Menu/Buttons/OptionsButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Game/Menu/m3x6.16.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Game/Menu/Buttons/ExitButton.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Game/FadeIn.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Game/Menu/TitleScreen.gd" type="Script" id=6]
+[ext_resource path="res://Resources/TitleScreen.png" type="Texture" id=7]
+
+[node name="TitleScreen" type="Control"]
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleScreen" type="Sprite" parent="."]
+position = Vector2( 560, 360 )
+scale = Vector2( 11.25, 11.25 )
+texture = ExtResource( 7 )
+
+[node name="Menu" type="VBoxContainer" parent="."]
+margin_left = 84.0
+margin_top = 89.0
+margin_right = 1124.0
+margin_bottom = 649.0
+rect_scale = Vector2( 0.984558, 0.972936 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterRaw" type="HBoxContainer" parent="Menu"]
+margin_right = 1040.0
+margin_bottom = 348.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Buttons" type="VBoxContainer" parent="Menu/CenterRaw"]
+margin_right = 256.0
+margin_bottom = 348.0
+size_flags_vertical = 3
+custom_constants/separation = 0
+alignment = 1
+
+[node name="StartButton" parent="Menu/CenterRaw/Buttons" instance=ExtResource( 1 )]
+margin_right = 256.0
+focus_mode = 2
+enabled_focus_mode = 2
+
+[node name="OptionsButton" parent="Menu/CenterRaw/Buttons" instance=ExtResource( 2 )]
+margin_top = 116.0
+margin_right = 256.0
+margin_bottom = 232.0
+rect_min_size = Vector2( 116, 116 )
+focus_mode = 2
+enabled_focus_mode = 2
+scene_to_load = "res://Game/Menu/Options.tscn"
+
+[node name="ExitButton" parent="Menu/CenterRaw/Buttons" instance=ExtResource( 4 )]
+margin_top = 232.0
+margin_right = 256.0
+margin_bottom = 348.0
+rect_min_size = Vector2( 116, 116 )
+focus_mode = 2
+enabled_focus_mode = 2
+
+[node name="VersionLabel" type="Label" parent="Menu"]
+margin_top = 531.0
+margin_right = 1040.0
+margin_bottom = 560.0
+size_flags_vertical = 10
+custom_fonts/font = ExtResource( 3 )
+text = "Version Beta 17w20 
+FTraced Team"
+align = 1
+valign = 2
+
+[node name="FadeIn" parent="." instance=ExtResource( 5 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1280.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 1, 1 )
+[connection signal="pressed" from="Menu/CenterRaw/Buttons/ExitButton" to="." method="_on_ExitButton_pressed"]
+[connection signal="fade_finish" from="FadeIn" to="." method="_on_FadeIn_fade_finish"]
