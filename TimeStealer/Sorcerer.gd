@@ -35,7 +35,7 @@ func _physics_process(delta):
 			showTexture(2)
 			animationPlayer.play("death")
 		else:
-			self.get_parent().remove_child(self)
+			queue_free()
 		
 	if attack_cooldown > 0:
 		attack_cooldown-=1

@@ -45,7 +45,7 @@ func _physics_process(delta):
 		if destructionTime > 0:
 			destructionTime-=1
 		else:
-			self.get_parent().remove_child(self)
+			queue_free()
 	else:
 		animationPlayer.play("idle")
 		

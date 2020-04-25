@@ -43,7 +43,7 @@ func _physics_process(delta):
 			animationPlayer.play("wizard_death")
 			return
 		else:
-			self.get_parent().remove_child(self)
+			queue_free()
 		
 	if attack_cooldown > 0:
 		attack_cooldown-=1
