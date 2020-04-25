@@ -33,6 +33,8 @@ var next_attack_time = 0
 var attack_damage = 30
 
 var damaged_timer = 0
+var isDead = false
+var wasDead = false
 
 var items = []
 
@@ -62,6 +64,7 @@ func _ready():
 
 
 func _process(delta):
+	
 	if time_health > max_time:
 		time_health = max_time
 	if time_health < 0:
@@ -73,6 +76,13 @@ func _process(delta):
 	else:
 		textureRect.modulate = Color(1.0, 1.0, 1.0, 1.0)
 	
+	if time_health <=0:
+		if isDead and not wasDead:
+			showTexture(4)
+			animationPlayer.play(\"death\")
+			wasDead = true
+		return
+		
 	match state:
 		MOVE:
 			move_state(delta)
@@ -111,6 +121,7 @@ func attack_animation_finished():
 	state = MOVE
 
 func move_state(delta):
+	consume_time(velocity.length()/MAX_SPEED/5)
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength(\"ui_right\") - Input.get_action_strength(\"ui_left\")
 	input_vector.y = Input.get_action_strength(\"ui_down\") - Input.get_action_strength(\"ui_up\")
@@ -148,9 +159,14 @@ func showTexture(textureId):
 		previousTextureId = textureId
 
 
+func consume_time(value):
+	time_health -= value
+	emit_signal(\"damaged\",time_health, max_time)
+	if time_health <= 0:
+		dead()
+
 func hit(damage):
 	if time_health > 0:
-		$AnimationPlayerMale.play(\"Hit\")
 		time_health -= damage
 		emit_signal(\"damaged\",time_health, max_time)
 		damaged_timer = 20
@@ -162,19 +178,13 @@ func hit(damage):
 
 
 func dead():
-	animationPlayer.play(\"death\")
-	showTexture(4)
-	queue_free()
+	isDead = true
 
 
 func _on_item_entered(body):
 	if body.get_name().begins_with(\"Item\"):
 		items.append(body)
 		body.get_parent().remove_child(body)
-
-
-func _on_Player_damaged(value, max_value):
-	pass # Replace with function body.
 "
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -285,7 +295,6 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=10]
-loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/death_male:frame")
 tracks/0/interp = 1
@@ -412,6 +421,7 @@ region_enabled = true
 region_rect = Rect2( -1, 288, 320, 32 )
 
 [node name="idle_male" type="Sprite" parent="TextureRect"]
+visible = false
 position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 10
