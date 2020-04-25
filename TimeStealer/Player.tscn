@@ -90,16 +90,23 @@ func _process(delta):
 		ATTACK:
 			attack_state(delta)
 
+var attack_preparation = 20
+
 
 func attack_state(delta):
+	showTexture(2)
+	animationPlayer.play(\"attack\")
+	
+
+func attack_animation_finished():
 	$HandShapeAttack.force_raycast_update()
 	var now = OS.get_ticks_msec()
 	if now >= next_attack_time:
 		if $HandShapeAttack.is_colliding():
 			next_attack_time = now + attack_cooldown_time
 			print(\"ATTACK SUCCESS\")
-			#var target = $HandShapeAttack.get_collider()
-			#target.hit(attack_damage)
+			var target = $HandShapeAttack.get_collider()
+			target.hit(attack_damage)
 		
 		#var input_vector = Vector2.ZERO
 		#input_vector.x = Input.get_action_strength(\"ui_right\") - Input.get_action_strength(\"ui_left\")
@@ -111,13 +118,9 @@ func attack_state(delta):
 		#else:
 			#var left_attack = $TextureRect/attack_male.flip_h
 		
-		showTexture(2)
 		if len(textures) > previousTextureId && velocity.x != 0:
 			textures[previousTextureId].flip_h = velocity.x < 0
 		animationPlayer.play(\"attack\")
-	
-
-func attack_animation_finished():
 	state = MOVE
 
 func move_state(delta):
@@ -203,6 +206,20 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack_animation_finished"
+} ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -365,7 +382,7 @@ bg_color = Color( 0, 0, 0, 1 )
 [node name="Player" type="KinematicBody2D"]
 scale = Vector2( 4, 4 )
 collision_layer = 2
-collision_mask = 5
+collision_mask = 21
 script = SubResource( 1 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -442,7 +459,6 @@ visible = false
 position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 10
-frame = 9
 region_enabled = true
 region_rect = Rect2( -1, 96, 320, 32 )
 
@@ -486,6 +502,7 @@ anims/move = SubResource( 13 )
 scale = Vector2( 3, 3 )
 enabled = true
 cast_to = Vector2( 0, 6 )
+collision_mask = 24
 collide_with_areas = true
 
 [node name="Camera2D" type="Camera2D" parent="."]

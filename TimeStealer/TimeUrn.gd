@@ -11,19 +11,10 @@ onready var texture = $TextureRect/decorative_dungeon
 
 var soul_generator = preload("res://Soul.tscn")
 
-var timer = 100
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	texture.frame = 5-size + 5*int(broken)
 	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	if timer <= 0:
-		hit(0)
-	else:
-		timer -=1
 
 func hit(damage):
 	if not broken:
