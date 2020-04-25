@@ -18,8 +18,9 @@ var projectileCount = 0
 var velocity = Vector2.ZERO
 
 const ACCELERATION = 500*8
-const MAX_SPEED = 1200*8
+const MAX_SPEED = 1200*16
 const FRICTION = 500*8
+const MIN_RANGE = 800*64
 
 var time = 100
 var deathTime = 0
@@ -69,7 +70,7 @@ func _physics_process(delta):
 		var minDist = -1
 		for i in range(len(targets)):
 			var sqr = self.position.distance_squared_to(targets[i].position)
-			if 100 < sqr && (minDist == -1 || sqr < minDist):
+			if MIN_RANGE < sqr && (minDist == -1 || sqr < minDist):
 				minDist = self.position.distance_squared_to(targets[i].position)
 				index = i
 			
@@ -94,8 +95,8 @@ func attack(target):
 	projectile.velocity = dir * MAX_SPEED
 	projectile.position = position + dir*30*8
 	projectileCount+=1
-	projectile.timeOut = 50*4
-	self.attack_cooldown = 40
+	projectile.timeOut = 50*8
+	self.attack_cooldown = 60
 	self.get_parent().add_child(projectile,true)#"PROJECTILE"+str(projectileCount)+"ID"+str(self.get_rid())
 	
 	

@@ -6,17 +6,19 @@ extends KinematicBody2D
 # var b = "text"
 var isDestructing = false
 var velocity = Vector2.ZERO
+var stableVelocity = Vector2.ZERO
 var wizard = null
 var timeOut = 0
 
 onready var animationPlayer = $AnimationPlayer
 var previousTextureId = 0
 onready var textures = [$TextureRect/projectile, $TextureRect/projectile_destruction]
+onready var collider = $CollisionShape2D
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	stableVelocity = velocity
 
-var destructionTime = 20
+var destructionTime = 5
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -39,9 +41,11 @@ func _physics_process(delta):
 			self.get_parent().remove_child(self)
 	else:
 		animationPlayer.play("idle")
-		var newVelocity = move_and_slide(velocity)
-		if newVelocity != velocity:
+		velocity = move_and_slide(velocity)
+		if (stableVelocity - velocity).length() > 0:
 			isDestructing = true
+			collider.disabled = true
+			velocity = velocity.normalized()
 
 
 func _on_Player_body_entered(body):

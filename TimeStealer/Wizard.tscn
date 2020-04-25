@@ -177,6 +177,7 @@ radius = 160.0
 height = 256.0
 
 [node name="Wizard" type="KinematicBody2D"]
+collision_layer = 8
 script = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
