@@ -1,5 +1,6 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=19 format=2]
 
+[ext_resource path="res://Game/HealthBar.gd" type="Script" id=1]
 [ext_resource path="res://Resources/wizard spritesheet calciumtrice.png" type="Texture" id=2]
 
 [sub_resource type="GDScript" id=1]
@@ -16,7 +17,8 @@ enum {
 }
 
 var state = MOVE
-var time_health = 100000
+var max_time = 100
+var time_health = 100
 
 const ACCELERATION = 500*24
 const MAX_SPEED = 1200*8
@@ -42,6 +44,8 @@ onready var maleTextures = [$TextureRect/idle_male, $TextureRect/moving_male,
 	$TextureRect/attack_male, $TextureRect/deflect_male, $TextureRect/death_male]
 var textures = []
 
+signal damaged(value, max_value)
+
 func _ready():
 	if sex == Male:
 		textures = maleTextures
@@ -53,6 +57,11 @@ func _ready():
 
 
 func _process(delta):
+	if time_health > max_time:
+		time_health = max_time
+	if time_health < 0:
+		time_health = 0
+	
 	match state:
 		MOVE:
 			move_state(delta)
@@ -132,6 +141,7 @@ func hit(damage):
 	if time_health > 0:
 		$AnimationPlayerMale.play(\"Hit\")
 		time_health -= damage
+		emit_signal(\"damaged\",time_health, max_time)
 		# print('Player got damage, time left:', time_health)
 		if time_health <= 0:
 			dead()
@@ -149,6 +159,10 @@ func _on_item_entered(body):
 	if body.get_name().begins_with(\"Item\"):
 		items.append(body)
 		body.get_parent().remove_child(body)
+
+
+func _on_Player_damaged(value, max_value):
+	pass # Replace with function body.
 "
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -337,6 +351,12 @@ tracks/0/keys = {
 [sub_resource type="CircleShape2D" id=14]
 radius = 9.05539
 
+[sub_resource type="StyleBoxFlat" id=15]
+bg_color = Color( 0, 0.486275, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=16]
+bg_color = Color( 0, 0, 0, 1 )
+
 [node name="Player" type="KinematicBody2D"]
 scale = Vector2( 4, 4 )
 collision_layer = 2
@@ -396,7 +416,6 @@ region_enabled = true
 region_rect = Rect2( -1, 288, 320, 32 )
 
 [node name="idle_male" type="Sprite" parent="TextureRect"]
-visible = false
 modulate = Color( 0.384314, 0.0196078, 0.0196078, 1 )
 position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
@@ -474,4 +493,31 @@ drag_margin_v_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 14 )
+
+[node name="Node2D" type="Node2D" parent="."]
+scale = Vector2( 0.25, 0.25 )
+script = ExtResource( 1 )
+
+[node name="Panel" type="Panel" parent="Node2D"]
+margin_left = -44.0
+margin_top = -126.0
+margin_right = 44.0
+margin_bottom = -108.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="Node2D"]
+margin_left = -42.0
+margin_top = -124.0
+margin_right = 42.0
+margin_bottom = -110.0
+custom_styles/fg = SubResource( 15 )
+custom_styles/bg = SubResource( 16 )
+value = 100.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="damaged" from="." to="Node2D" method="_on_Player_damaged"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_item_entered"]
