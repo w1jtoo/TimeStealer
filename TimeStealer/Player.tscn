@@ -18,9 +18,9 @@ enum {
 var state = MOVE
 var time_health = 100000
 
-const ACCELERATION = 500
-const MAX_SPEED = 150
-const FRICTION = 500
+const ACCELERATION = 500*24
+const MAX_SPEED = 1200*8
+const FRICTION = 500*64
 
 var velocity = Vector2.ZERO
 var sex = Male
@@ -464,7 +464,7 @@ collide_with_areas = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-zoom = Vector2( 4, 4 )
+zoom = Vector2( 64, 64 )
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 

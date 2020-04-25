@@ -45,7 +45,7 @@ tracks/0/keys = {
 }
 
 [node name="WizardProjectile" type="KinematicBody2D"]
-scale = Vector2( 2, 2 )
+scale = Vector2( 16, 16 )
 script = ExtResource( 2 )
 
 [node name="TextureRect" type="TextureRect" parent="."]

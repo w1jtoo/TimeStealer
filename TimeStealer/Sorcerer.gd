@@ -64,13 +64,13 @@ func _physics_process(delta):
 		
 	
 func attack(target):
-	var dir = (target.position - self.position).normalized()
+	var dir = (target.position - self.position-Vector2.UP * 90*16).normalized()
 	var projectile = projectileGenerator.instance()
 	projectile.wizard = self
-	projectile.velocity = dir * 200 - Vector2.UP * 90
-	projectile.position = position + dir*30+Vector2.UP * 90
+	projectile.velocity = dir * 200*8
+	projectile.position = position + Vector2.UP * 90*16 + dir*30*8
 	projectileCount+=1
-	projectile.timeOut = 50
+	projectile.timeOut = 50*8
 	self.attack_cooldown = 40
 	self.get_parent().add_child(projectile,true)
 	

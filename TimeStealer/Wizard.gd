@@ -17,6 +17,10 @@ var projectileCount = 0
 
 var velocity = Vector2.ZERO
 
+const ACCELERATION = 500*8
+const MAX_SPEED = 1200*8
+const FRICTION = 500*8
+
 var time = 100
 var deathTime = 0
 
@@ -74,7 +78,7 @@ func _physics_process(delta):
 			showTexture(1)
 		if minDist != -1:
 			var dirVector = (targets[index].position - self.position).normalized()
-			velocity = dirVector * 40
+			velocity = dirVector * MAX_SPEED/8
 		else:
 			velocity *= 0.7
 		velocity = move_and_slide(velocity)
@@ -87,10 +91,10 @@ func attack(target):
 	var dir = (target.position - self.position).normalized()
 	var projectile = projectileGenerator.instance()
 	projectile.wizard = self
-	projectile.velocity = dir * 200
-	projectile.position = position + dir*30
+	projectile.velocity = dir * MAX_SPEED
+	projectile.position = position + dir*30*8
 	projectileCount+=1
-	projectile.timeOut = 50
+	projectile.timeOut = 50*4
 	self.attack_cooldown = 40
 	self.get_parent().add_child(projectile,true)#"PROJECTILE"+str(projectileCount)+"ID"+str(self.get_rid())
 	
