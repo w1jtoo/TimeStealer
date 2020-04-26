@@ -23,9 +23,10 @@ func hit(damage):
 		spawn_time(size)
 
 func spawn_time(time):
+	var spawn_range = 200
 	for i in range(time):
-		var x = rand_range(-1,1)*100
-		var y = rand_range(-1,1)*100
+		var x = cos(2*i*PI/time) * spawn_range
+		var y = sin(2*i*PI/time) * spawn_range
 		var soul = soul_generator.instance()
 		soul.position = Vector2(x,y) + position
 		self.get_parent().add_child(soul)
