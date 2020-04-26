@@ -1,4 +1,4 @@
-[gd_scene load_steps=130 format=2]
+[gd_scene load_steps=133 format=2]
 
 [ext_resource path="res://Resources/Curb.png" type="Texture" id=1]
 [ext_resource path="res://Resources/RedFloor.png" type="Texture" id=2]
@@ -27,6 +27,9 @@
 [ext_resource path="res://ItemKey.tscn" type="PackedScene" id=25]
 [ext_resource path="res://Pusher.tscn" type="PackedScene" id=26]
 [ext_resource path="res://Game/MapObject/SinglePillarAlpha.tscn" type="PackedScene" id=27]
+[ext_resource path="res://Game/MapObject/Skeleton.tscn" type="PackedScene" id=28]
+[ext_resource path="res://Game/MapObject/4BoneHead.tscn" type="PackedScene" id=29]
+[ext_resource path="res://Game/MapObject/BrokenBarrel.tscn" type="PackedScene" id=30]
 
 [sub_resource type="TileSet" id=1]
 0/name = "RedFloor.png 0"
@@ -1471,6 +1474,12 @@ margin_bottom = 328.0
 position = Vector2( -112, 336 )
 collision_mask = 6
 
+[node name="BigStone7" parent="." instance=ExtResource( 18 )]
+position = Vector2( 592, 248 )
+
+[node name="Bones2" parent="." instance=ExtResource( 29 )]
+position = Vector2( 608, 256 )
+
 [node name="Floor" type="Node2D" parent="."]
 
 [node name="RedFloor" type="TileMap" parent="Floor"]
@@ -1492,7 +1501,7 @@ tile_set = SubResource( 3 )
 cell_size = Vector2( 16, 16 )
 collision_mask = 6
 format = 1
-tile_data = PoolIntArray( 5, 0, 0, 2097164, 0, 0, 2097165, 0, 3, 2097166, 0, 2, 2097167, 0, 1, 2097168, 0, 2, 2097169, 0, 1, 2097170, 0, 1, 2097171, 0, 3, 2097172, 0, 3, 2097173, 0, 2, 2097174, 0, 1, 2097175, 0, 1, 2097176, 0, 1, 2097177, 0, 2, 2097178, 0, 1, 2097179, 0, 4, 2162700, 0, 0, 2162701, 0, 0, 2162702, 0, 0, 2162703, 0, 0, 2162704, 0, 0, 2162705, 0, 0, 2162706, 0, 0, 2162707, 0, 0, 2162708, 0, 0, 2162709, 0, 0, 2162710, 0, 0, 2162711, 0, 0, 2162712, 0, 0, 2162713, 0, 0, 2162714, 0, 0, 2162715, 0, 0, 2228236, 0, 65536, 2228237, 0, 65538, 2228238, 0, 65539, 2228239, 0, 65537, 2228240, 0, 65538, 2228241, 0, 65539, 2228242, 0, 65537, 2228243, 0, 65539, 2228244, 0, 65538, 2228245, 0, 65537, 2228246, 0, 65537, 2228247, 0, 65538, 2228248, 0, 65539, 2228249, 0, 65537, 2228250, 0, 65538, 2228251, 0, 65540, 3801080, 0, 0, 3801081, 0, 1, 3801082, 0, 3, 3801083, 0, 3, 3801084, 0, 2, 3801085, 0, 3, 3801086, 0, 3, 3801087, 0, 4, 3866616, 0, 65536, 3866617, 0, 65539, 3866618, 0, 65537, 3866619, 0, 65539, 3866620, 0, 65539, 3866621, 0, 65538, 3866622, 0, 65537, 3866623, 0, 65540 )
+tile_data = PoolIntArray( 2097164, 0, 0, 2097165, 0, 3, 2097166, 0, 2, 2097167, 0, 1, 2097168, 0, 2, 2097169, 0, 1, 2097170, 0, 1, 2097171, 0, 3, 2097172, 0, 3, 2097173, 0, 2, 2097174, 0, 1, 2097175, 0, 1, 2097176, 0, 1, 2097177, 0, 2, 2097178, 0, 1, 2097179, 0, 4, 2162700, 0, 0, 2162701, 0, 0, 2162702, 0, 0, 2162703, 0, 0, 2162704, 0, 0, 2162705, 0, 0, 2162706, 0, 0, 2162707, 0, 0, 2162708, 0, 0, 2162709, 0, 0, 2162710, 0, 0, 2162711, 0, 0, 2162712, 0, 0, 2162713, 0, 0, 2162714, 0, 0, 2162715, 0, 0, 2228236, 0, 65536, 2228237, 0, 65538, 2228238, 0, 65539, 2228239, 0, 65537, 2228240, 0, 65538, 2228241, 0, 65539, 2228242, 0, 65537, 2228243, 0, 65539, 2228244, 0, 65538, 2228245, 0, 65537, 2228246, 0, 65537, 2228247, 0, 65538, 2228248, 0, 65539, 2228249, 0, 65537, 2228250, 0, 65538, 2228251, 0, 65540, 3801080, 0, 0, 3801081, 0, 1, 3801082, 0, 3, 3801083, 0, 3, 3801084, 0, 2, 3801085, 0, 3, 3801086, 0, 3, 3801087, 0, 4, 3866616, 0, 65536, 3866617, 0, 65539, 3866618, 0, 65537, 3866619, 0, 65539, 3866620, 0, 65539, 3866621, 0, 65538, 3866622, 0, 65537, 3866623, 0, 65540 )
 
 [node name="TileFloorSet" type="TileMap" parent="Floor"]
 tile_set = SubResource( 4 )
@@ -1539,7 +1548,7 @@ compatibility_mode = true
 centered_textures = true
 collision_mask = 6
 format = 1
-tile_data = PoolIntArray( -10879089, 2, 0, -10551453, 2, 0, -2621496, 2, 0, -2621488, 2, 0, -2621480, 2, 0, -2621472, 2, 0, -2621464, 2, 0, -2621441, 3, 0, -2686958, 3, 0, -1048596, 4, 0, 1048548, 2, 0, 1048556, 2, 0, 1048564, 2, 0, 1572792, 5, 0, 1572800, 5, 0, 4194232, 3, 0, 4194240, 3, 0, 6291388, 4, 0, 6291396, 4, 0, 6291404, 4, 0 )
+tile_data = PoolIntArray( -10879089, 2, 0, -10551453, 2, 0, -2621457, 2, 0, -2621449, 2, 0, -2621441, 3, 0, -2686958, 3, 0, -1048596, 4, 0, 1048548, 2, 0, 1048556, 2, 0, 1048564, 2, 0, 1572792, 5, 0, 1572800, 5, 0, 4194232, 3, 0, 4194240, 3, 0, 6291388, 4, 0, 6291396, 4, 0, 6291404, 4, 0 )
 
 [node name="Water" type="TileMap" parent="."]
 tile_set = SubResource( 51 )
@@ -1570,19 +1579,18 @@ collision_mask = 6
 
 [node name="DoublePillar" parent="." instance=ExtResource( 10 )]
 position = Vector2( 112, 200 )
-collision_mask = 6
 
 [node name="Spikes33" parent="." instance=ExtResource( 16 )]
-margin_left = 64.0
-margin_top = 256.0
-margin_right = 96.0
-margin_bottom = 288.0
+margin_left = 96.0
+margin_top = 272.0
+margin_right = 128.0
+margin_bottom = 304.0
 
 [node name="Spikes20" parent="." instance=ExtResource( 16 )]
 margin_left = 64.0
-margin_top = 232.0
+margin_top = 272.0
 margin_right = 96.0
-margin_bottom = 264.0
+margin_bottom = 304.0
 
 [node name="BrokenArch" parent="." instance=ExtResource( 14 )]
 position = Vector2( 224, 240 )
@@ -1635,6 +1643,12 @@ collision_mask = 6
 opened = false
 key = 2
 
+[node name="Spikes39" parent="." instance=ExtResource( 16 )]
+margin_left = 96.0
+margin_top = 416.0
+margin_right = 128.0
+margin_bottom = 448.0
+
 [node name="Door" parent="." instance=ExtResource( 23 )]
 position = Vector2( 96, 512 )
 scale = Vector2( 0.28513, 0.28513 )
@@ -1677,8 +1691,14 @@ position = Vector2( 752, 752 )
 id = 2
 
 [node name="TallStone3" parent="." instance=ExtResource( 20 )]
-position = Vector2( 440, 560 )
+position = Vector2( 432, 560 )
 collision_mask = 6
+
+[node name="TimeUrn" parent="TallStone3" instance=ExtResource( 24 )]
+position = Vector2( 128, 16 )
+
+[node name="TimeUrn2" parent="TallStone3" instance=ExtResource( 24 )]
+position = Vector2( 112, 16 )
 
 [node name="ItemKey3" parent="." instance=ExtResource( 25 )]
 position = Vector2( 456, 376 )
@@ -1733,7 +1753,7 @@ margin_right = -128.0
 margin_bottom = 1032.0
 
 [node name="TimeUrn" parent="." instance=ExtResource( 24 )]
-position = Vector2( -54, 897 )
+position = Vector2( -152, 928 )
 
 [node name="Spikes5" parent="." instance=ExtResource( 16 )]
 margin_left = -193.0
@@ -1803,45 +1823,172 @@ margin_bottom = 592.0
 
 [node name="Spikes21" parent="." instance=ExtResource( 16 )]
 margin_left = 96.0
-margin_top = 208.0
+margin_top = 248.0
 margin_right = 128.0
-margin_bottom = 240.0
+margin_bottom = 280.0
+
+[node name="Spikes36" parent="." instance=ExtResource( 16 )]
+margin_left = 64.0
+margin_top = 416.0
+margin_right = 96.0
+margin_bottom = 448.0
+
+[node name="Spikes37" parent="." instance=ExtResource( 16 )]
+margin_left = 96.0
+margin_top = 392.0
+margin_right = 128.0
+margin_bottom = 424.0
 
 [node name="SinglePillarAlpha" parent="." instance=ExtResource( 27 )]
-position = Vector2( 88, 400 )
+position = Vector2( 72, 408 )
 
-[node name="DoublePillar3" parent="." instance=ExtResource( 10 )]
-position = Vector2( 112, 272 )
+[node name="Spikes35" parent="." instance=ExtResource( 16 )]
+margin_left = 96.0
+margin_top = 368.0
+margin_right = 128.0
+margin_bottom = 400.0
 
 [node name="Spikes28" parent="." instance=ExtResource( 16 )]
 margin_left = 96.0
-margin_top = 304.0
+margin_top = 320.0
 margin_right = 128.0
-margin_bottom = 336.0
+margin_bottom = 352.0
 
 [node name="Spikes30" parent="." instance=ExtResource( 16 )]
 margin_left = 96.0
-margin_top = 352.0
+margin_top = 344.0
 margin_right = 128.0
-margin_bottom = 384.0
+margin_bottom = 376.0
+
+[node name="Spikes38" parent="." instance=ExtResource( 16 )]
+margin_left = 96.0
+margin_top = 296.0
+margin_right = 128.0
+margin_bottom = 328.0
+
+[node name="SinglePillarAlpha2" parent="." instance=ExtResource( 27 )]
+position = Vector2( 72, 315 )
 
 [node name="Spikes29" parent="." instance=ExtResource( 16 )]
-margin_left = 96.0
-margin_top = 328.0
-margin_right = 128.0
-margin_bottom = 360.0
+margin_left = 64.0
+margin_top = 320.0
+margin_right = 96.0
+margin_bottom = 352.0
 
 [node name="Spikes32" parent="." instance=ExtResource( 16 )]
 margin_left = 64.0
-margin_top = 280.0
+margin_top = 344.0
 margin_right = 96.0
-margin_bottom = 312.0
+margin_bottom = 376.0
 
 [node name="Spikes31" parent="." instance=ExtResource( 16 )]
 margin_left = 64.0
-margin_top = 208.0
+margin_top = 248.0
 margin_right = 96.0
-margin_bottom = 240.0
+margin_bottom = 280.0
 
 [node name="Pusher" parent="." instance=ExtResource( 26 )]
-position = Vector2( 80, 392 )
+position = Vector2( 80, 384 )
+frequency = 16
+
+[node name="Skeleton" parent="." instance=ExtResource( 28 )]
+position = Vector2( 112, 224 )
+
+[node name="Spikes41" parent="." instance=ExtResource( 16 )]
+margin_left = 512.0
+margin_top = 176.0
+margin_right = 544.0
+margin_bottom = 208.0
+
+[node name="Pusher2" parent="." instance=ExtResource( 26 )]
+position = Vector2( -16, 368 )
+rotation = -1.74846e-07
+side = 1
+frequency = 8
+
+[node name="Bones" parent="." instance=ExtResource( 29 )]
+position = Vector2( 88, 411 )
+
+[node name="DoublePillar3" parent="." instance=ExtResource( 10 )]
+position = Vector2( 624, 200 )
+
+[node name="DoublePillar4" parent="." instance=ExtResource( 10 )]
+position = Vector2( 464, 200 )
+
+[node name="Pillar2" parent="." instance=ExtResource( 13 )]
+position = Vector2( 312, 72 )
+
+[node name="SinglePillarAlpha4" parent="." instance=ExtResource( 27 )]
+position = Vector2( 376, 72 )
+
+[node name="SinglePillarAlpha3" parent="." instance=ExtResource( 27 )]
+position = Vector2( 440, 72 )
+
+[node name="Spikes43" parent="." instance=ExtResource( 16 )]
+margin_left = 576.0
+margin_top = 176.0
+margin_right = 608.0
+margin_bottom = 208.0
+
+[node name="Spikes42" parent="." instance=ExtResource( 16 )]
+margin_left = 544.0
+margin_top = 176.0
+margin_right = 576.0
+margin_bottom = 208.0
+
+[node name="Spikes40" parent="." instance=ExtResource( 16 )]
+margin_left = 480.0
+margin_top = 176.0
+margin_right = 512.0
+margin_bottom = 208.0
+
+[node name="TimeUrn9" parent="." instance=ExtResource( 24 )]
+position = Vector2( 280, 352 )
+
+[node name="TimeUrn10" parent="." instance=ExtResource( 24 )]
+position = Vector2( 280, 360 )
+
+[node name="TimeUrn11" parent="." instance=ExtResource( 24 )]
+position = Vector2( 264, 352 )
+
+[node name="TimeUrn4" parent="." instance=ExtResource( 24 )]
+position = Vector2( 328, 64 )
+
+[node name="TimeUrn5" parent="." instance=ExtResource( 24 )]
+position = Vector2( 360, 64 )
+
+[node name="TimeUrn6" parent="." instance=ExtResource( 24 )]
+position = Vector2( 392, 64 )
+
+[node name="TimeUrn7" parent="." instance=ExtResource( 24 )]
+position = Vector2( -16, 64 )
+
+[node name="Skeleton2" parent="." instance=ExtResource( 28 )]
+position = Vector2( 472, 136 )
+
+[node name="TimeUrn8" parent="." instance=ExtResource( 24 )]
+position = Vector2( -8, 376 )
+
+[node name="Barrel7" parent="." instance=ExtResource( 22 )]
+position = Vector2( 368, 272 )
+
+[node name="Barrel8" parent="." instance=ExtResource( 22 )]
+position = Vector2( 352, 272 )
+
+[node name="Barrel9" parent="." instance=ExtResource( 22 )]
+position = Vector2( 336, 272 )
+
+[node name="BrokenBarrel" parent="." instance=ExtResource( 30 )]
+position = Vector2( 320, 272 )
+
+[node name="BrokenBarrel2" parent="." instance=ExtResource( 30 )]
+position = Vector2( 216, 352 )
+
+[node name="Barrel10" parent="." instance=ExtResource( 22 )]
+position = Vector2( 368, 288 )
+
+[node name="Barrel6" parent="." instance=ExtResource( 22 )]
+position = Vector2( 200, 384 )
+
+[node name="Barrel11" parent="." instance=ExtResource( 22 )]
+position = Vector2( 368, 304 )

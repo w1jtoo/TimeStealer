@@ -20,6 +20,7 @@ enum {
 	CAST
 }
 
+export var getting_dmg_cooldown = 50
 var state = MOVE
 var max_time = 10000
 var time_health = 10000
@@ -108,10 +109,6 @@ func _unhandled_input(event) -> void:
 
 
 func _process(delta):
-	var dir = oldVelocity.normalized()
-	print(dir)
-	if len(textures) > previousTextureId && dir.x != 0:
-		textures[previousTextureId].flip_h = dir.x < 0
 	# there is crutch, delete it!  
 	if isInMenu:
 		return
@@ -126,25 +123,13 @@ func _process(delta):
 	else:
 		textureRect.modulate = Color(1.0, 1.0, 1.0, 1.0)
 	
-	if time_health <= 0:
+	if time_health <=0:
 		if isDead and not wasDead:
 			showTexture(4)
 			animationPlayer.play(\"death\")
 			wasDead = true
 		return
 		
-	oldVelocity = (get_viewport().get_mouse_position()-get_viewport().size/2).normalized()
-	var input_vector = Vector2.ZERO
-	input_vector.x = Input.get_action_strength(\"ui_right\") - Input.get_action_strength(\"ui_left\")
-	input_vector.y = Input.get_action_strength(\"ui_down\") - Input.get_action_strength(\"ui_up\")
-	input_vector = input_vector.normalized()
-	if input_vector != Vector2.ZERO:
-		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
-	else:
-		velocity = velocity.move_toward(input_vector, ACCELERATION * delta)
-	
-	velocity = move_and_slide(velocity)
-	
 	match state:
 		MOVE:
 			move_state(delta)
@@ -157,7 +142,6 @@ func _process(delta):
 
 func attack_state(delta):
 	showTexture(2)
-	velocity = velocity.move_toward(Vector2.ZERO, ACCELERATION * delta)
 	animationPlayer.play(\"attack\")
 	
 
@@ -172,19 +156,43 @@ func attack_animation_finished():
 					var target = $HandShapeAttack.get_collider()
 					target.hit(attack_damage)
 					consume_time(-attack_damage)
+					
+				if len(textures) > previousTextureId && velocity.x != 0:
+					textures[previousTextureId].flip_h = velocity.x < 0
 		CAST:
 			var now = OS.get_ticks_msec()
-			if now >= next_attack_time:
-				var dir = oldVelocity.normalized()
-				if currentSpell != NONE:
-					next_attack_time = now + attack_cooldown_time
-					createSpell(dir)
-					consume_time(-attack_damage)
+			if now >= next_attack_time and currentSpell != NONE:
+				next_attack_time = now + attack_cooldown_time
+				var dir = velocity.normalized()
+				if dir == Vector2.ZERO:
+					dir = oldVelocity.normalized()
+				
+				createSpell(dir)
+				consume_time(-attack_damage)
 					
+				if len(textures) > previousTextureId && velocity.x != 0:
+					textures[previousTextureId].flip_h = velocity.x < 0
+				
 	state = MOVE
 
 func move_state(delta):
 	consume_time(velocity.length()/MAX_SPEED/5)
+	var input_vector = Vector2.ZERO
+	input_vector.x = Input.get_action_strength(\"ui_right\") - Input.get_action_strength(\"ui_left\")
+	input_vector.y = Input.get_action_strength(\"ui_down\") - Input.get_action_strength(\"ui_up\")
+	input_vector = input_vector.normalized()
+	
+	if input_vector != Vector2.ZERO:
+		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
+	else:
+		if velocity != Vector2.ZERO:
+			oldVelocity = velocity
+		velocity = velocity.move_toward(input_vector, ACCELERATION * delta)
+	
+	velocity = move_and_slide(velocity)
+	
+	if len(textures) > previousTextureId && velocity.x != 0:
+		textures[previousTextureId].flip_h = velocity.x < 0
 	
 	if velocity != Vector2.ZERO:
 		animationPlayer.play(\"move\")
@@ -217,11 +225,12 @@ func consume_time(value):
 		dead()
 
 func hit(damage):
-	if time_health > 0:
+	# print('got hit: ', damage)
+	if time_health > 0 and damaged_timer == 0:
 		time_health -= damage
 		emit_signal(\"damaged\",time_health, max_time)
-		damaged_timer = 20
-		# print('Player got damage, time left:', time_health)
+		damaged_timer = getting_dmg_cooldown
+		# print('Player got damage: ', damage)
 		if time_health <= 0:
 			dead()
 	
@@ -236,7 +245,7 @@ func createSpell(dir):
 		ICE_SHARDS:
 			var shards = spellInstances[0].instance()
 			shards.position = position+dir*16
-			shards.velocity = dir*MAX_SPEED*2
+			shards.velocity = dir*MAX_SPEED
 			shards.caster = self
 			self.get_parent().add_child(shards)
 		TIME_AREA:
@@ -273,7 +282,7 @@ func _on_PauseMenuScene_background_fade_finish():
 "
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 6.88224, 5.63164 )
+extents = Vector2( 6.88224, 1.5 )
 
 [sub_resource type="Animation" id=3]
 loop = true
