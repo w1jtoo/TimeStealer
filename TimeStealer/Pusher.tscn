@@ -21,6 +21,7 @@ tracks/0/keys = {
 
 [node name="Pusher" type="KinematicBody2D"]
 script = ExtResource( 1 )
+frequency = 1
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_left = -16.0
