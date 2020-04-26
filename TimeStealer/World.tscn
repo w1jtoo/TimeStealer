@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Map.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Game/World/Spell.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Game/MapObject/Text.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Wizard.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Sorcerer.tscn" type="PackedScene" id=6]
 
 [node name="YSort" type="Control"]
 __meta__ = {
@@ -12,25 +14,33 @@ __meta__ = {
 
 [node name="YSort" type="YSort" parent="."]
 
+[node name="Wizard" parent="YSort" instance=ExtResource( 5 )]
+position = Vector2( 10372, 11046 )
+scale = Vector2( 6, 6 )
+
+[node name="Boss" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( 8761, 4437 )
+scale = Vector2( 2, 2 )
+
 [node name="Spell3" parent="YSort" instance=ExtResource( 3 )]
-position = Vector2( 7526.5, 3659.21 )
+position = Vector2( 9505, 5599 )
 scale = Vector2( 4, 4 )
+type = 0
 
 [node name="Spell2" parent="YSort" instance=ExtResource( 3 )]
-position = Vector2( 9686.75, 3581.5 )
+position = Vector2( 4453, 4924 )
 scale = Vector2( 4, 4 )
 type = 1
 
 [node name="Spell" parent="YSort" instance=ExtResource( 3 )]
-position = Vector2( 8598.85, 4622.77 )
+position = Vector2( 8105, 1892 )
 scale = Vector2( 4, 4 )
-type = 0
 
 [node name="Map" parent="YSort" instance=ExtResource( 2 )]
 scale = Vector2( 16, 16 )
 
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
-position = Vector2( 684, 18804 )
+position = Vector2( 572, 18785 )
 scale = Vector2( 16, 16 )
 
 [node name="Text" parent="." instance=ExtResource( 4 )]

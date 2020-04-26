@@ -501,7 +501,7 @@ script = SubResource( 1 )
 [node name="Camera2D" type="Camera2D" parent="."]
 scale = Vector2( 0.25, 0.25 )
 current = true
-zoom = Vector2( 8, 8 )
+zoom = Vector2( 4, 4 )
 
 [node name="UserInterface" type="CanvasLayer" parent="."]
 layer = 100
