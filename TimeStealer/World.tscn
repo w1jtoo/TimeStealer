@@ -5,40 +5,70 @@
 [ext_resource path="res://Game/World/Spell.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Game/MapObject/Text.tscn" type="PackedScene" id=4]
 
-[node name="YSort" type="YSort"]
-scale = Vector2( 2, 2 )
+[node name="YSort" type="Control"]
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Spell3" parent="." instance=ExtResource( 3 )]
+[node name="YSort" type="YSort" parent="."]
+
+[node name="Spell3" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 7526.5, 3659.21 )
 scale = Vector2( 4, 4 )
 
-[node name="Spell2" parent="." instance=ExtResource( 3 )]
+[node name="Spell2" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 9686.75, 3581.5 )
 scale = Vector2( 4, 4 )
 type = 1
 
-[node name="Spell" parent="." instance=ExtResource( 3 )]
+[node name="Spell" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 8598.85, 4622.77 )
 scale = Vector2( 4, 4 )
 type = 0
 
-[node name="Map" parent="." instance=ExtResource( 2 )]
+[node name="Map" parent="YSort" instance=ExtResource( 2 )]
 scale = Vector2( 16, 16 )
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 548.108, 18825.9 )
+[node name="Player" parent="YSort" instance=ExtResource( 1 )]
+position = Vector2( 684, 18804 )
 scale = Vector2( 16, 16 )
 
 [node name="Text" parent="." instance=ExtResource( 4 )]
-margin_left = -1309.0
-margin_top = 18420.5
-margin_right = -371.0
-margin_bottom = 18937.5
-text = "как двигаться? + вода + лучше делать не мало и особо много текста в одном окошке ... "
+margin_left = -4.79639
+margin_top = 17692.5
+margin_right = 1275.2
+margin_bottom = 18214.5
+text = "Hello my brave gamer!
+The most important things there are:
+1) your life is your time
+2) when you move your time is decrease
+Good luck!"
+
+[node name="Text3" parent="." instance=ExtResource( 4 )]
+margin_left = -1881.34
+margin_top = 14722.4
+margin_right = -969.342
+margin_bottom = 14929.4
+text = "Use your attack with Q or E
+to blow up the barrel"
 
 [node name="Text2" parent="." instance=ExtResource( 4 )]
-margin_left = -2843.0
-margin_top = 17862.5
-margin_right = -2803.0
-margin_bottom = 17964.5
-text = "Рассказы про мир"
+margin_left = -1866.85
+margin_top = 17855.5
+margin_right = -578.845
+margin_bottom = 17957.5
+text = "You can move with W, A, S, D or arrows"
+
+[node name="Text4" parent="." instance=ExtResource( 4 )]
+margin_left = -771.757
+margin_top = 13858.6
+margin_right = -107.757
+margin_bottom = 13960.6
+text = "Don't forget the key!"
+
+[node name="Text5" parent="." instance=ExtResource( 4 )]
+margin_left = -1347.62
+margin_top = 8760.17
+margin_right = -603.618
+margin_bottom = 8862.17
+text = "Good luck and have fun!"
