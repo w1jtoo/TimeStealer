@@ -1,25 +1,24 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Map.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Game/World/Spell.tscn" type="PackedScene" id=3]
-[ext_resource path="res://TimeUrn.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Pusher.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Game/MapObject/Text.tscn" type="PackedScene" id=4]
 
 [node name="YSort" type="YSort"]
 scale = Vector2( 2, 2 )
 
 [node name="Spell3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 7517.14, 3382.33 )
+position = Vector2( 7526.5, 3659.21 )
 scale = Vector2( 4, 4 )
 
 [node name="Spell2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 9677.39, 3304.62 )
+position = Vector2( 9686.75, 3581.5 )
 scale = Vector2( 4, 4 )
 type = 1
 
 [node name="Spell" parent="." instance=ExtResource( 3 )]
-position = Vector2( 8589.49, 4354.29 )
+position = Vector2( 8598.85, 4622.77 )
 scale = Vector2( 4, 4 )
 type = 0
 
@@ -30,10 +29,16 @@ scale = Vector2( 16, 16 )
 position = Vector2( 684, 18804 )
 scale = Vector2( 16, 16 )
 
-[node name="TimeUrn" parent="." instance=ExtResource( 4 )]
-position = Vector2( 7688.59, 4741.11 )
-scale = Vector2( 16, 16 )
+[node name="Text" parent="." instance=ExtResource( 4 )]
+margin_left = -1309.0
+margin_top = 18420.5
+margin_right = -371.0
+margin_bottom = 18937.5
+text = "как двигаться? + вода + лучше делать не мало и особо много текста в одном окошке ... "
 
-[node name="Pusher" parent="." instance=ExtResource( 5 )]
-position = Vector2( -2818.34, 6085.25 )
-scale = Vector2( 16, 16 )
+[node name="Text2" parent="." instance=ExtResource( 4 )]
+margin_left = -2843.0
+margin_top = 17862.5
+margin_right = -2803.0
+margin_bottom = 17964.5
+text = "Рассказы про мир"
