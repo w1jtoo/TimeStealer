@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Game/MapObject/Spike.tscn" type="PackedScene" id=1]
+
+[node name="4Spikes" type="Node2D"]
+
+[node name="Spike" parent="." instance=ExtResource( 1 )]
+position = Vector2( -6, -3 )
+
+[node name="Spike2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 6, -3 )
+
+[node name="Spike4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 6, 7 )
+
+[node name="Spike3" parent="." instance=ExtResource( 1 )]
+position = Vector2( -6, 7 )
