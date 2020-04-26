@@ -139,7 +139,7 @@ func _process(delta):
 			wasDead = true
 		return
 		
-	oldVelocity = (get_viewport().get_mouse_position()-get_viewport().size/2 - Vector2.UP*32).normalized()
+	oldVelocity = (get_viewport().get_mouse_position()-get_viewport().size/2).normalized()
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength(\"ui_right\") - Input.get_action_strength(\"ui_left\")
 	input_vector.y = Input.get_action_strength(\"ui_down\") - Input.get_action_strength(\"ui_up\")
@@ -263,20 +263,20 @@ func createSpell(dir):
 	match currentSpell:
 		ICE_SHARDS:
 			var shards = spellInstances[0].instance()
-			shards.position = position+dir*16+Vector2.UP*160
+			shards.position = position+dir*16
 			shards.velocity = dir*MAX_SPEED*2
 			shards.caster = self
 			consume_time(10)
 			self.get_parent().add_child(shards)
 		TIME_AREA:
 			var area = spellInstances[1].instance()
-			area.position = position+dir*16+Vector2.UP*160
+			area.position = position+dir*16
 			area.caster = self
 			consume_time(20)
 			self.get_parent().add_child(area)
 		SHIELD:
 			var shield = spellInstances[2].instance()
-			shield.position = position+dir*16+Vector2.UP*160
+			shield.position = position+dir*16
 			shield.caster = self
 			shield.rotation = -dir.angle_to(Vector2.RIGHT)
 			consume_time(10)
