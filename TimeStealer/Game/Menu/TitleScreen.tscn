@@ -78,6 +78,10 @@ FTraced Team"
 align = 1
 valign = 2
 
+[node name="Candle" parent="." instance=ExtResource( 8 )]
+position = Vector2( 762, 560 )
+scale = Vector2( 8, 8 )
+
 [node name="FadeIn" parent="." instance=ExtResource( 5 )]
 visible = false
 anchor_right = 0.0
@@ -85,9 +89,5 @@ anchor_bottom = 0.0
 margin_right = 1280.0
 margin_bottom = 720.0
 rect_min_size = Vector2( 1, 1 )
-
-[node name="Candle" parent="." instance=ExtResource( 8 )]
-position = Vector2( 762, 560 )
-scale = Vector2( 8, 8 )
 [connection signal="pressed" from="Menu/CenterRaw/Buttons/ExitButton" to="." method="_on_ExitButton_pressed"]
 [connection signal="fade_finish" from="FadeIn" to="." method="_on_FadeIn_fade_finish"]
