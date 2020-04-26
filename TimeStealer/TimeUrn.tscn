@@ -9,7 +9,7 @@ collision_mask = 14
 script = ExtResource( 2 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( -5.80182, 7.2221, -3.23156, 10.4687, 3.93812, 10.604, 6.23782, 6.54571, 2.99118, 3.7049, -3.50211, 3.56962 )
+polygon = PoolVector2Array( -7.82499, 8.19601, -5.20259, 12.217, 4.58765, 12.5667, 7.73452, 7.49671, 7.55969, 3.82537, -7.65016, 3.47572 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_right = 40.0
