@@ -18,7 +18,7 @@ scale = Vector2( 4, 4 )
 type = 1
 
 [node name="Spell" parent="." instance=ExtResource( 3 )]
-position = Vector2( 8589.49, 4345.89 )
+position = Vector2( 8589.49, 4354.29 )
 scale = Vector2( 4, 4 )
 type = 0
 
