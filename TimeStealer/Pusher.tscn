@@ -35,7 +35,6 @@ __meta__ = {
 position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 11
-frame = 10
 region_enabled = true
 region_rect = Rect2( 0, 0, 352, 32 )
 
