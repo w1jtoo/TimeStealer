@@ -25,9 +25,6 @@
 [ext_resource path="res://Game/MapObject/Spike.tscn" type="PackedScene" id=24]
 [ext_resource path="res://ItemKey.tscn" type="PackedScene" id=25]
 
-
-
-
 [sub_resource type="TileSet" id=1]
 0/name = "RedFloor.png 0"
 0/texture = ExtResource( 2 )

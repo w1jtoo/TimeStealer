@@ -4,11 +4,8 @@
 [ext_resource path="res://Game/MapObject/Spike.gd" type="Script" id=2]
 [ext_resource path="res://Resources/traps/Spike.png" type="Texture" id=3]
 
-
-
-
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 5.4494, 5.30137 )
+extents = Vector2( 8, 3.60516 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 1 )
@@ -148,7 +145,6 @@ animations = [ {
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -4.39484 )
 shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
@@ -160,7 +156,7 @@ playing = true
 [node name="SingleSpike" type="AnimatedSprite" parent="."]
 position = Vector2( -0.950268, -4.47093 )
 frames = SubResource( 31 )
-frame = 1
+frame = 12
 playing = true
 [connection signal="area_entered" from="." to="." method="_on_Spike_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_Spike_body_entered"]

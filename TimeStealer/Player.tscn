@@ -2,10 +2,9 @@
 
 [ext_resource path="res://Game/HealthBar.gd" type="Script" id=1]
 [ext_resource path="res://Resources/wizard spritesheet calciumtrice.png" type="Texture" id=2]
-[ext_resource path="res://Resources/spells/runes-orange-3.png" type="Texture" id=3]
+[ext_resource path="res://Game/Menu/PauseMenu/PauseMenuScene.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Resources/spells/leaf-jade-3.png" type="Texture" id=4]
 [ext_resource path="res://Resources/spells/ice-blue-3.png" type="Texture" id=5]
-[ext_resource path="res://Game/Menu/PauseMenu/PauseMenuScene.tscn" type="PackedScene" id=3]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends KinematicBody2D
@@ -27,7 +26,7 @@ var max_time = 10000
 var time_health = 10000
 
 const ACCELERATION = 500*24
-const MAX_SPEED = 1200*8
+const MAX_SPEED = 1200*4
 const FRICTION = 1200*64
 
 var velocity = Vector2.ZERO
@@ -283,7 +282,7 @@ func _on_PauseMenuScene_background_fade_finish():
 "
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 6.88224, 5.63164 )
+extents = Vector2( 6.88224, 1.5 )
 
 [sub_resource type="Animation" id=3]
 loop = true
@@ -502,7 +501,7 @@ __meta__ = {
 
 [node name="idle_female" type="Sprite" parent="TextureRect"]
 visible = false
-position = Vector2( 16, 16 )
+position = Vector2( 15.9737, 11.5131 )
 texture = ExtResource( 2 )
 hframes = 10
 frame = 5
@@ -511,7 +510,7 @@ region_rect = Rect2( -1, 160, 320, 32 )
 
 [node name="moving_female" type="Sprite" parent="TextureRect"]
 visible = false
-position = Vector2( 16, 16 )
+position = Vector2( 15.2237, 11.2631 )
 texture = ExtResource( 2 )
 flip_h = true
 hframes = 10
@@ -520,16 +519,15 @@ region_rect = Rect2( -1, 224, 320, 32 )
 
 [node name="attack_female" type="Sprite" parent="TextureRect"]
 visible = false
-position = Vector2( 16, 16 )
+position = Vector2( 15.2237, 11.2631 )
 texture = ExtResource( 2 )
 hframes = 10
-frame = 8
 region_enabled = true
 region_rect = Rect2( -1, 256, 320, 32 )
 
 [node name="deflect_female" type="Sprite" parent="TextureRect"]
 visible = false
-position = Vector2( 16, 16 )
+position = Vector2( 15.2237, 11.2631 )
 texture = ExtResource( 2 )
 hframes = 10
 frame = 9
@@ -538,7 +536,7 @@ region_rect = Rect2( -1, 192, 320, 32 )
 
 [node name="death_female" type="Sprite" parent="TextureRect"]
 visible = false
-position = Vector2( 16, 16 )
+position = Vector2( 15.2237, 11.2631 )
 texture = ExtResource( 2 )
 hframes = 10
 region_enabled = true
@@ -546,7 +544,7 @@ region_rect = Rect2( -1, 288, 320, 32 )
 
 [node name="idle_male" type="Sprite" parent="TextureRect"]
 visible = false
-position = Vector2( 16, 16 )
+position = Vector2( 15.2237, 11.2631 )
 texture = ExtResource( 2 )
 hframes = 10
 region_enabled = true
@@ -554,7 +552,7 @@ region_rect = Rect2( -1, 0, 320, 32 )
 
 [node name="moving_male" type="Sprite" parent="TextureRect"]
 visible = false
-position = Vector2( 16, 16 )
+position = Vector2( 15.2237, 11.2631 )
 texture = ExtResource( 2 )
 flip_h = true
 hframes = 10
@@ -563,16 +561,15 @@ region_rect = Rect2( -1, 64, 320, 32 )
 
 [node name="attack_male" type="Sprite" parent="TextureRect"]
 visible = false
-position = Vector2( 16, 16 )
+position = Vector2( 15.2237, 11.2631 )
 texture = ExtResource( 2 )
 hframes = 10
-frame = 8
 region_enabled = true
 region_rect = Rect2( -1, 96, 320, 32 )
 
 [node name="deflect_male" type="Sprite" parent="TextureRect"]
 visible = false
-position = Vector2( 16, 16 )
+position = Vector2( 15.2237, 11.2631 )
 texture = ExtResource( 2 )
 hframes = 10
 region_enabled = true
@@ -580,7 +577,7 @@ region_rect = Rect2( -1, 32, 320, 32 )
 
 [node name="death_male" type="Sprite" parent="TextureRect"]
 visible = false
-position = Vector2( 16, 16 )
+position = Vector2( 15.2237, 11.2631 )
 texture = ExtResource( 2 )
 hframes = 10
 region_enabled = true
@@ -619,6 +616,7 @@ collide_with_areas = true
 shape = SubResource( 13 )
 
 [node name="Node2D" type="Node2D" parent="."]
+position = Vector2( 0, -1.25 )
 scale = Vector2( 0.25, 0.25 )
 script = ExtResource( 1 )
 
@@ -686,7 +684,6 @@ texture = ExtResource( 4 )
 visible = false
 position = Vector2( 7, 7 )
 scale = Vector2( 0.06, 0.06 )
-texture = ExtResource( 3 )
 [connection signal="damaged" from="." to="Node2D" method="_on_Player_damaged"]
 [connection signal="spell_changed" from="." to="Node2D" method="_on_Player_spell_changed"]
 [connection signal="background_fade_finish" from="UserInterface/PauseMenuScene" to="." method="_on_PauseMenuScene_background_fade_finish"]
