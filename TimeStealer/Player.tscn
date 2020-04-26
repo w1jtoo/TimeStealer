@@ -184,7 +184,7 @@ func attack_animation_finished():
 				if currentSpell != NONE:
 					next_attack_time = now + attack_cooldown_time
 					createSpell(dir)
-					consume_time(-attack_damage)
+					consume_time(attack_damage/5)
 					
 	state = MOVE
 
@@ -243,17 +243,20 @@ func createSpell(dir):
 			shards.position = position+dir*16+Vector2.UP*160
 			shards.velocity = dir*MAX_SPEED*2
 			shards.caster = self
+			consume_time(10)
 			self.get_parent().add_child(shards)
 		TIME_AREA:
 			var area = spellInstances[1].instance()
 			area.position = position+dir*16+Vector2.UP*160
 			area.caster = self
+			consume_time(20)
 			self.get_parent().add_child(area)
 		SHIELD:
 			var shield = spellInstances[2].instance()
 			shield.position = position+dir*16+Vector2.UP*160
 			shield.caster = self
 			shield.rotation = -dir.angle_to(Vector2.RIGHT)
+			consume_time(10)
 			self.get_parent().add_child(shield)
 	
 

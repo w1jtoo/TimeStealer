@@ -23,7 +23,7 @@ func hit(damage):
 		spawn_time(size)
 
 func spawn_time(time):
-	var spawn_range = 200
+	var spawn_range = 200/8/4
 	for i in range(time):
 		var x = cos(2*i*PI/time) * spawn_range
 		var y = sin(2*i*PI/time) * spawn_range
