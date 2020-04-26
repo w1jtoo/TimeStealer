@@ -36,7 +36,7 @@ var attack_damage = 30
 var damaged_timer = 0
 var isDead = false
 var wasDead = false
-
+var isInMenu = false
 var items = []
 
 onready var animationPlayer = $AnimationPlayerMale
@@ -52,6 +52,15 @@ onready var maleTextures = [$TextureRect/idle_male, $TextureRect/moving_male,
 	$TextureRect/attack_male, $TextureRect/deflect_male, $TextureRect/death_male]
 var textures = []
 
+# var paused: = false setget set_paused
+
+# onready var scene_tree: = get_tree()
+# onready var pause_overlay = get_node(\"\")
+
+# func set_paused(value: bool) -> void: 
+#	pass
+
+
 signal damaged(value, max_value)
 
 func _ready():
@@ -63,9 +72,20 @@ func _ready():
 		animationPlayer = animationPlayerFemale
 	textures[previousTextureId].show()
 
+func _unhandled_input(event) -> void:
+	if event.is_action_pressed(\"ui_cancel\"):
+		if isInMenu:
+			$UserInterface/PauseMenuScene.rev_background_fade_in()
+		else:
+			$UserInterface/PauseMenuScene.show()
+			$UserInterface/PauseMenuScene.background_fade_in()
+		get_tree().set_input_as_handled()
+
 
 func _process(delta):
-	
+	# there is crutch, delete it!  
+	if isInMenu:
+		return
 	if time_health > max_time:
 		time_health = max_time
 	if time_health < 0:
@@ -189,6 +209,16 @@ func _on_item_entered(body):
 	if body.get_name().begins_with(\"Item\"):
 		items.append(body)
 		body.get_parent().remove_child(body)
+
+
+func _on_PauseMenuScene_background_fade_finish():
+	if isInMenu: 
+		isInMenu = false
+		$UserInterface/PauseMenuScene.hide()
+# 		get_tree().paused = false
+	else:
+		isInMenu = true
+# 		get_tree().paused = true
 "
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -386,6 +416,17 @@ collision_layer = 2
 collision_mask = 21
 script = SubResource( 1 )
 
+[node name="Camera2D" type="Camera2D" parent="."]
+scale = Vector2( 0.25, 0.25 )
+current = true
+zoom = Vector2( 8, 8 )
+
+[node name="UserInterface" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="PauseMenuScene" parent="UserInterface" instance=ExtResource( 3 )]
+visible = false
+
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_left = -15.4737
 margin_top = -26.2631
@@ -506,20 +547,6 @@ cast_to = Vector2( 0, 6 )
 collision_mask = 24
 collide_with_areas = true
 
-[node name="Camera2D" type="Camera2D" parent="."]
-scale = Vector2( 0.299035, 0.652598 )
-current = true
-zoom = Vector2( 8, 8 )
-drag_margin_h_enabled = true
-drag_margin_v_enabled = true
-
-[node name="PauseMenuScene" parent="Camera2D" instance=ExtResource( 3 )]
-margin_left = -452.768
-margin_top = -172.1
-margin_right = -452.768
-margin_bottom = -172.1
-rect_scale = Vector2( 3.33573, 0.946467 )
-
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
@@ -551,4 +578,5 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="damaged" from="." to="Node2D" method="_on_Player_damaged"]
+[connection signal="background_fade_finish" from="UserInterface/PauseMenuScene" to="." method="_on_PauseMenuScene_background_fade_finish"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_item_entered"]
