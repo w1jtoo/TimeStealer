@@ -27,7 +27,7 @@ var max_time = 100
 var time_health = 100
 
 const ACCELERATION = 500*24/2
-const MAX_SPEED = 1200*2
+const MAX_SPEED = 1200
 const FRICTION = 1200*64
 
 var velocity = Vector2.ZERO
@@ -195,7 +195,7 @@ func attack_animation_finished():
 	state = MOVE
 
 func move_state(delta):
-	consume_time(velocity.length()/MAX_SPEED/5)
+	consume_time(velocity.length()/MAX_SPEED/5*2)
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength(\"ui_right\") - Input.get_action_strength(\"ui_left\")
 	input_vector.y = Input.get_action_strength(\"ui_down\") - Input.get_action_strength(\"ui_up\")
