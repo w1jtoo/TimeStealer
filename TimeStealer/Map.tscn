@@ -2028,7 +2028,7 @@ position = Vector2( -16, 64 )
 position = Vector2( 472, 136 )
 
 [node name="TimeUrn8" parent="." instance=ExtResource( 24 )]
-position = Vector2( -8, 376 )
+position = Vector2( -88, 328 )
 
 [node name="Barrel7" parent="." instance=ExtResource( 22 )]
 position = Vector2( 368, 272 )
