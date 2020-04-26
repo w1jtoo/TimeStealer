@@ -47,7 +47,6 @@ var targets = ["Wizard", "Sorcerer", "TimeUrn"]
 
 func _on_Area2D_body_entered(body):
 	if isValid(body):
-		print(body.get_name())
 		if not isDestructing:
 			body.hit(20)
 			if caster != null:

@@ -1,10 +1,11 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Game/HealthBar.gd" type="Script" id=1]
 [ext_resource path="res://Resources/wizard spritesheet calciumtrice.png" type="Texture" id=2]
 [ext_resource path="res://Game/Menu/PauseMenu/PauseMenuScene.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Resources/spells/leaf-jade-3.png" type="Texture" id=4]
 [ext_resource path="res://Resources/spells/ice-blue-3.png" type="Texture" id=5]
+[ext_resource path="res://Resources/spells/runes-orange-3.png" type="Texture" id=6]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends KinematicBody2D
@@ -674,6 +675,7 @@ texture = ExtResource( 4 )
 visible = false
 position = Vector2( 7, 7 )
 scale = Vector2( 0.06, 0.06 )
+texture = ExtResource( 6 )
 [connection signal="damaged" from="." to="Node2D" method="_on_Player_damaged"]
 [connection signal="spell_changed" from="." to="Node2D" method="_on_Player_spell_changed"]
 [connection signal="background_fade_finish" from="UserInterface/PauseMenuScene" to="." method="_on_PauseMenuScene_background_fade_finish"]
