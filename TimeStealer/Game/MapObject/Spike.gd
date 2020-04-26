@@ -2,9 +2,9 @@ extends Area2D
 
 onready var start_animation_time = OS.get_ticks_msec()
 onready var next_attack_time = 0
-onready var attack_cooldown = 858
-var spike_damage = 50
 var last_bodies = []
+export var attack_cooldown = 858
+export var spike_damage = 50
 
 func _physics_process(delta):
 	for body in last_bodies:

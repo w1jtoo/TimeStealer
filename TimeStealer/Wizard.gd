@@ -17,6 +17,11 @@ var projectileCount = 0
 
 var velocity = Vector2.ZERO
 
+const ACCELERATION = 500*8
+const MAX_SPEED = 1200*16
+const FRICTION = 500*8
+const MIN_RANGE = 800*64
+
 var time = 100
 var deathTime = 0
 
@@ -27,18 +32,17 @@ var deathTime = 0
 func _ready():
 	textures[previousTextureId].show()
 
+func dead():
+	queue_free()
+
 func _physics_process(delta):
 	if len(textures) > previousTextureId:
 		textures[previousTextureId].flip_h = velocity.x > 0
 	
 	if time <= 0:
-		if deathTime > 0:
-			deathTime -= 1
-			showTexture(3)
-			animationPlayer.play("wizard_death")
-			return
-		else:
-			self.get_parent().remove_child(self)
+		showTexture(3)
+		animationPlayer.play("wizard_death")
+		return
 		
 	if attack_cooldown > 0:
 		attack_cooldown-=1
@@ -65,7 +69,7 @@ func _physics_process(delta):
 		var minDist = -1
 		for i in range(len(targets)):
 			var sqr = self.position.distance_squared_to(targets[i].position)
-			if 100 < sqr && (minDist == -1 || sqr < minDist):
+			if MIN_RANGE < sqr && (minDist == -1 || sqr < minDist):
 				minDist = self.position.distance_squared_to(targets[i].position)
 				index = i
 			
@@ -74,7 +78,7 @@ func _physics_process(delta):
 			showTexture(1)
 		if minDist != -1:
 			var dirVector = (targets[index].position - self.position).normalized()
-			velocity = dirVector * 40
+			velocity = dirVector * MAX_SPEED/8
 		else:
 			velocity *= 0.7
 		velocity = move_and_slide(velocity)
@@ -87,11 +91,11 @@ func attack(target):
 	var dir = (target.position - self.position).normalized()
 	var projectile = projectileGenerator.instance()
 	projectile.wizard = self
-	projectile.velocity = dir * 200
-	projectile.position = position + dir*30
+	projectile.velocity = dir * MAX_SPEED
+	projectile.position = position + dir*30*8
 	projectileCount+=1
-	projectile.timeOut = 50
-	self.attack_cooldown = 40
+	projectile.timeOut = 50*8
+	self.attack_cooldown = 60
 	self.get_parent().add_child(projectile,true)#"PROJECTILE"+str(projectileCount)+"ID"+str(self.get_rid())
 	
 	

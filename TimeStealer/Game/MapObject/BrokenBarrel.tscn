@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Game/MapObject/decorative.png" type="Texture" id=1]
+
+[node name="BrokenBarrel" type="StaticBody2D"]
+collision_mask = 6
+
+[node name="decorative" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 112, 136, 16, 24 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( 0, 1 )
+polygon = PoolVector2Array( 0, 7, 6, 4, 8, 0, 6, -4, 0, -5, -6, -4, -8, -1, -5, 4 )
