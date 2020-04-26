@@ -40,7 +40,7 @@ scale = Vector2( 4, 4 )
 scale = Vector2( 16, 16 )
 
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
-position = Vector2( 8090, 4938 )
+position = Vector2( 955, 18734 )
 scale = Vector2( 16, 16 )
 
 [node name="Text" parent="." instance=ExtResource( 4 )]
