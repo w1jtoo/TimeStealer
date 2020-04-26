@@ -2062,3 +2062,12 @@ position = Vector2( 392, 120 )
 
 [node name="ExtinctLight" parent="Light6/ExtinctLight" instance=ExtResource( 31 )]
 position = Vector2( 224, 0 )
+
+[node name="Barrel12" parent="." instance=ExtResource( 22 )]
+position = Vector2( 456, 216 )
+
+[node name="TimeUrn" parent="Barrel12" instance=ExtResource( 24 )]
+position = Vector2( 176, 112 )
+
+[node name="TimeUrn" parent="Barrel12/TimeUrn" instance=ExtResource( 24 )]
+position = Vector2( -16, 24 )
