@@ -21,6 +21,7 @@ enum {
 	CAST
 }
 
+export var getting_dmg_cooldown = 50
 var state = MOVE
 var max_time = 10000
 var time_health = 10000
@@ -225,11 +226,12 @@ func consume_time(value):
 		dead()
 
 func hit(damage):
-	if time_health > 0:
+	# print('got hit: ', damage)
+	if time_health > 0 and damaged_timer == 0:
 		time_health -= damage
 		emit_signal(\"damaged\",time_health, max_time)
-		damaged_timer = 20
-		# print('Player got damage, time left:', time_health)
+		damaged_timer = getting_dmg_cooldown
+		# print('Player got damage: ', damage)
 		if time_health <= 0:
 			dead()
 	
