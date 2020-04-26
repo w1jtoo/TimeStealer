@@ -19,8 +19,8 @@ position = Vector2( 10372, 11046 )
 scale = Vector2( 6, 6 )
 
 [node name="Boss" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 8761, 4437 )
-scale = Vector2( 2, 2 )
+position = Vector2( 8739, 4407 )
+scale = Vector2( 4, 4 )
 
 [node name="Spell3" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 9505, 5599 )
@@ -40,7 +40,7 @@ scale = Vector2( 4, 4 )
 scale = Vector2( 16, 16 )
 
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
-position = Vector2( 572, 18785 )
+position = Vector2( 8090, 4938 )
 scale = Vector2( 16, 16 )
 
 [node name="Text" parent="." instance=ExtResource( 4 )]
