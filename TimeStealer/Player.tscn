@@ -108,6 +108,10 @@ func _unhandled_input(event) -> void:
 
 
 func _process(delta):
+	var dir = oldVelocity.normalized()
+	print(dir)
+	if len(textures) > previousTextureId && dir.x != 0:
+		textures[previousTextureId].flip_h = dir.x < 0
 	# there is crutch, delete it!  
 	if isInMenu:
 		return
@@ -129,12 +133,12 @@ func _process(delta):
 			wasDead = true
 		return
 		
+	oldVelocity = (get_viewport().get_mouse_position()-get_viewport().size/2).normalized()
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength(\"ui_right\") - Input.get_action_strength(\"ui_left\")
 	input_vector.y = Input.get_action_strength(\"ui_down\") - Input.get_action_strength(\"ui_up\")
 	input_vector = input_vector.normalized()
 	if input_vector != Vector2.ZERO:
-		oldVelocity = input_vector
 		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
 	else:
 		velocity = velocity.move_toward(input_vector, ACCELERATION * delta)
@@ -168,11 +172,6 @@ func attack_animation_finished():
 					var target = $HandShapeAttack.get_collider()
 					target.hit(attack_damage)
 					consume_time(-attack_damage)
-					
-					var dir = oldVelocity.normalized()
-					print(dir)
-					if len(textures) > previousTextureId && dir.x != 0:
-						textures[previousTextureId].flip_h = dir.x > 0
 		CAST:
 			var now = OS.get_ticks_msec()
 			if now >= next_attack_time:
@@ -182,17 +181,10 @@ func attack_animation_finished():
 					createSpell(dir)
 					consume_time(-attack_damage)
 					
-				print(dir)
-				if len(textures) > previousTextureId && dir.x != 0:
-					textures[previousTextureId].flip_h = dir.x > 0
-					
 	state = MOVE
 
 func move_state(delta):
 	consume_time(velocity.length()/MAX_SPEED/5)
-	
-	if len(textures) > previousTextureId && velocity.x != 0:
-		textures[previousTextureId].flip_h = velocity.x < 0
 	
 	if velocity != Vector2.ZERO:
 		animationPlayer.play(\"move\")
@@ -244,7 +236,7 @@ func createSpell(dir):
 		ICE_SHARDS:
 			var shards = spellInstances[0].instance()
 			shards.position = position+dir*16
-			shards.velocity = dir*MAX_SPEED
+			shards.velocity = dir*MAX_SPEED*2
 			shards.caster = self
 			self.get_parent().add_child(shards)
 		TIME_AREA:
@@ -281,7 +273,7 @@ func _on_PauseMenuScene_background_fade_finish():
 "
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 6.88224, 1.5 )
+extents = Vector2( 6.88224, 5.63164 )
 
 [sub_resource type="Animation" id=3]
 loop = true
@@ -499,8 +491,7 @@ __meta__ = {
 }
 
 [node name="idle_female" type="Sprite" parent="TextureRect"]
-visible = false
-position = Vector2( 15.9737, 11.5131 )
+position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 10
 frame = 5
@@ -509,7 +500,7 @@ region_rect = Rect2( -1, 160, 320, 32 )
 
 [node name="moving_female" type="Sprite" parent="TextureRect"]
 visible = false
-position = Vector2( 15.2237, 11.2631 )
+position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 flip_h = true
 hframes = 10
@@ -518,15 +509,16 @@ region_rect = Rect2( -1, 224, 320, 32 )
 
 [node name="attack_female" type="Sprite" parent="TextureRect"]
 visible = false
-position = Vector2( 15.2237, 11.2631 )
+position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 10
+frame = 8
 region_enabled = true
 region_rect = Rect2( -1, 256, 320, 32 )
 
 [node name="deflect_female" type="Sprite" parent="TextureRect"]
 visible = false
-position = Vector2( 15.2237, 11.2631 )
+position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 10
 frame = 9
@@ -535,7 +527,7 @@ region_rect = Rect2( -1, 192, 320, 32 )
 
 [node name="death_female" type="Sprite" parent="TextureRect"]
 visible = false
-position = Vector2( 15.2237, 11.2631 )
+position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 10
 region_enabled = true
@@ -543,7 +535,7 @@ region_rect = Rect2( -1, 288, 320, 32 )
 
 [node name="idle_male" type="Sprite" parent="TextureRect"]
 visible = false
-position = Vector2( 15.2237, 11.2631 )
+position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 10
 region_enabled = true
@@ -551,7 +543,7 @@ region_rect = Rect2( -1, 0, 320, 32 )
 
 [node name="moving_male" type="Sprite" parent="TextureRect"]
 visible = false
-position = Vector2( 15.2237, 11.2631 )
+position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 flip_h = true
 hframes = 10
@@ -560,15 +552,16 @@ region_rect = Rect2( -1, 64, 320, 32 )
 
 [node name="attack_male" type="Sprite" parent="TextureRect"]
 visible = false
-position = Vector2( 15.2237, 11.2631 )
+position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 10
+frame = 8
 region_enabled = true
 region_rect = Rect2( -1, 96, 320, 32 )
 
 [node name="deflect_male" type="Sprite" parent="TextureRect"]
 visible = false
-position = Vector2( 15.2237, 11.2631 )
+position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 10
 region_enabled = true
@@ -576,7 +569,7 @@ region_rect = Rect2( -1, 32, 320, 32 )
 
 [node name="death_male" type="Sprite" parent="TextureRect"]
 visible = false
-position = Vector2( 15.2237, 11.2631 )
+position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 10
 region_enabled = true
@@ -615,7 +608,6 @@ collide_with_areas = true
 shape = SubResource( 13 )
 
 [node name="Node2D" type="Node2D" parent="."]
-position = Vector2( 0, -1.25 )
 scale = Vector2( 0.25, 0.25 )
 script = ExtResource( 1 )
 
