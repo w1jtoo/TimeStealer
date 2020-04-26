@@ -5,6 +5,7 @@
 [ext_resource path="res://Resources/spells/runes-orange-3.png" type="Texture" id=3]
 [ext_resource path="res://Resources/spells/leaf-jade-3.png" type="Texture" id=4]
 [ext_resource path="res://Resources/spells/ice-blue-3.png" type="Texture" id=5]
+[ext_resource path="res://Game/Menu/PauseMenu/PauseMenuScene.tscn" type="PackedScene" id=3]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends KinematicBody2D
@@ -51,6 +52,7 @@ var spellInstances = [preload(\"res://Game/World/IceArrow.tscn\"),
 	preload(\"res://Game/World/TimeStealingArea.tscn\"),
 	preload(\"res://Game/World/Shield.tscn\")]
 
+var isInMenu = false
 var items = []
 
 onready var spellTextures = [$Node2D/Panel2/TextureRect/Panel,
@@ -73,6 +75,15 @@ onready var maleTextures = [$TextureRect/idle_male, $TextureRect/moving_male,
 	$TextureRect/attack_male, $TextureRect/deflect_male, $TextureRect/death_male]
 var textures = []
 
+# var paused: = false setget set_paused
+
+# onready var scene_tree: = get_tree()
+# onready var pause_overlay = get_node(\"\")
+
+# func set_paused(value: bool) -> void: 
+#	pass
+
+
 signal damaged(value, max_value)
 signal spell_changed(type)
 
@@ -87,9 +98,20 @@ func _ready():
 		animationPlayer = animationPlayerFemale
 	textures[previousTextureId].show()
 
+func _unhandled_input(event) -> void:
+	if event.is_action_pressed(\"ui_cancel\"):
+		if isInMenu:
+			$UserInterface/PauseMenuScene.rev_background_fade_in()
+		else:
+			$UserInterface/PauseMenuScene.show()
+			$UserInterface/PauseMenuScene.background_fade_in()
+		get_tree().set_input_as_handled()
+
 
 func _process(delta):
-	
+	# there is crutch, delete it!  
+	if isInMenu:
+		return
 	if time_health > max_time:
 		time_health = max_time
 	if time_health < 0:
@@ -246,6 +268,16 @@ func _on_item_entered(body):
 	if body.get_name().begins_with(\"Spell\"):
 		currentSpell = body.type + 1
 		emit_signal(\"spell_changed\", currentSpell)
+
+
+func _on_PauseMenuScene_background_fade_finish():
+	if isInMenu: 
+		isInMenu = false
+		$UserInterface/PauseMenuScene.hide()
+# 		get_tree().paused = false
+	else:
+		isInMenu = true
+# 		get_tree().paused = true
 "
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -446,6 +478,17 @@ collision_layer = 2
 collision_mask = 21
 script = SubResource( 1 )
 
+[node name="Camera2D" type="Camera2D" parent="."]
+scale = Vector2( 0.25, 0.25 )
+current = true
+zoom = Vector2( 8, 8 )
+
+[node name="UserInterface" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="PauseMenuScene" parent="UserInterface" instance=ExtResource( 3 )]
+visible = false
+
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_left = -15.4737
 margin_top = -26.2631
@@ -568,12 +611,6 @@ cast_to = Vector2( 0, 6 )
 collision_mask = 24
 collide_with_areas = true
 
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-zoom = Vector2( 8, 8 )
-drag_margin_h_enabled = true
-drag_margin_v_enabled = true
-
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
@@ -650,4 +687,5 @@ scale = Vector2( 0.06, 0.06 )
 texture = ExtResource( 3 )
 [connection signal="damaged" from="." to="Node2D" method="_on_Player_damaged"]
 [connection signal="spell_changed" from="." to="Node2D" method="_on_Player_spell_changed"]
+[connection signal="background_fade_finish" from="UserInterface/PauseMenuScene" to="." method="_on_PauseMenuScene_background_fade_finish"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_item_entered"]

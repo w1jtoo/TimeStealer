@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Game/Menu/Buttons/OptionsButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Game/Menu/PauseMenu/Exit.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Game/Menu/PauseMenu/RestartButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Game/Menu/PauseMenu/PauseMenuScene.gd" type="Script" id=4]
+[ext_resource path="res://Game/FadeIn.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Game/Menu/PauseMenu/BackgroundFadeIn.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Game/Menu/PauseMenu/BackButton.tscn" type="PackedScene" id=7]
+
+[node name="PauseMenuScene" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 1, 1 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackgroundFadeIn" parent="." instance=ExtResource( 6 )]
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+margin_left = 40.0
+margin_top = 56.0
+margin_right = 392.0
+margin_bottom = 440.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Back" parent="Buttons" instance=ExtResource( 7 )]
+margin_right = 352.0
+rect_scale = Vector2( 1, 1 )
+
+[node name="RestartButton" parent="Buttons" instance=ExtResource( 3 )]
+margin_top = 106.0
+margin_right = 352.0
+margin_bottom = 222.0
+
+[node name="OptionsButton" parent="Buttons" instance=ExtResource( 1 )]
+margin_top = 226.0
+margin_right = 352.0
+margin_bottom = 342.0
+scene_to_load = "res://Game/Menu/Options.tscn"
+
+[node name="ExitButton" parent="Buttons" instance=ExtResource( 2 )]
+margin_top = 346.0
+margin_right = 352.0
+margin_bottom = 462.0
+scene_to_load = "res://Game/Menu/TitleScreen.tscn"
+
+[node name="FadeIn" parent="." instance=ExtResource( 5 )]
+visible = false
+[connection signal="background_fade_finish" from="BackgroundFadeIn" to="." method="_on_BackgroundFadeIn_background_fade_finish"]
+[connection signal="button_up" from="Buttons/Back" to="." method="_on_Back_button_up"]
+[connection signal="button_up" from="Buttons/RestartButton" to="." method="_on_RestartButton_button_up"]
+[connection signal="ready" from="Buttons/RestartButton" to="." method="_on_RestartButton_ready"]
+[connection signal="pressed" from="Buttons/OptionsButton" to="." method="_on_OptionsButton_pressed"]
+[connection signal="pressed" from="Buttons/ExitButton" to="." method="_on_ExitButton_pressed"]
+[connection signal="fade_finish" from="FadeIn" to="." method="_on_FadeIn_fade_finish"]
