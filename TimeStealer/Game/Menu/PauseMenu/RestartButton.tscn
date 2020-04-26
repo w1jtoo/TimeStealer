@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Game/Menu/m3x6_16.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Game/Menu/PauseMenu/RestartButton.gd" type="Script" id=2]
+
+[node name="RestartButton" type="Button"]
+margin_right = 224.0
+margin_bottom = 102.0
+rect_min_size = Vector2( 256, 116 )
+flat = true
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_fonts/font = ExtResource( 1 )
+text = "Restart"

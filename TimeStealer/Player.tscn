@@ -1,7 +1,8 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Game/HealthBar.gd" type="Script" id=1]
 [ext_resource path="res://Resources/wizard spritesheet calciumtrice.png" type="Texture" id=2]
+[ext_resource path="res://Game/Menu/PauseMenu/PauseMenuScene.tscn" type="PackedScene" id=3]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends KinematicBody2D
@@ -283,7 +284,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/attack_male:frame")
 tracks/0/interp = 1
@@ -311,7 +312,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=9]
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/death_male:frame")
 tracks/0/interp = 1
@@ -325,7 +326,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=10]
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/deflect_male:frame")
 tracks/0/interp = 1
@@ -339,7 +340,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=11]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -355,7 +356,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=12]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/moving_male:frame")
@@ -370,13 +371,13 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="CircleShape2D" id=14]
+[sub_resource type="CircleShape2D" id=13]
 radius = 9.05539
 
-[sub_resource type="StyleBoxFlat" id=15]
+[sub_resource type="StyleBoxFlat" id=14]
 bg_color = Color( 0, 0.486275, 1, 1 )
 
-[sub_resource type="StyleBoxFlat" id=16]
+[sub_resource type="StyleBoxFlat" id=15]
 bg_color = Color( 0, 0, 0, 1 )
 
 [node name="Player" type="KinematicBody2D"]
@@ -492,11 +493,11 @@ anims/move = SubResource( 7 )
 
 [node name="AnimationPlayerMale" type="AnimationPlayer" parent="."]
 autoplay = "idle"
-anims/attack = SubResource( 9 )
-anims/death = SubResource( 10 )
-anims/deflect = SubResource( 11 )
-anims/idle = SubResource( 12 )
-anims/move = SubResource( 13 )
+anims/attack = SubResource( 8 )
+anims/death = SubResource( 9 )
+anims/deflect = SubResource( 10 )
+anims/idle = SubResource( 11 )
+anims/move = SubResource( 12 )
 
 [node name="HandShapeAttack" type="RayCast2D" parent="."]
 scale = Vector2( 3, 3 )
@@ -506,15 +507,23 @@ collision_mask = 24
 collide_with_areas = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
+scale = Vector2( 0.299035, 0.652598 )
 current = true
 zoom = Vector2( 8, 8 )
 drag_margin_h_enabled = true
 drag_margin_v_enabled = true
 
+[node name="PauseMenuScene" parent="Camera2D" instance=ExtResource( 3 )]
+margin_left = -452.768
+margin_top = -172.1
+margin_right = -452.768
+margin_bottom = -172.1
+rect_scale = Vector2( 3.33573, 0.946467 )
+
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 14 )
+shape = SubResource( 13 )
 
 [node name="Node2D" type="Node2D" parent="."]
 scale = Vector2( 0.25, 0.25 )
@@ -534,8 +543,8 @@ margin_left = -42.0
 margin_top = -124.0
 margin_right = 42.0
 margin_bottom = -110.0
-custom_styles/fg = SubResource( 15 )
-custom_styles/bg = SubResource( 16 )
+custom_styles/fg = SubResource( 14 )
+custom_styles/bg = SubResource( 15 )
 value = 100.0
 percent_visible = false
 __meta__ = {
