@@ -90,8 +90,6 @@ func _process(delta):
 		ATTACK:
 			attack_state(delta)
 
-var attack_preparation = 20
-
 
 func attack_state(delta):
 	showTexture(2)
@@ -107,6 +105,7 @@ func attack_animation_finished():
 			print(\"ATTACK SUCCESS\")
 			var target = $HandShapeAttack.get_collider()
 			target.hit(attack_damage)
+			consume_time(-attack_damage)
 		
 		#var input_vector = Vector2.ZERO
 		#input_vector.x = Input.get_action_strength(\"ui_right\") - Input.get_action_strength(\"ui_left\")
@@ -283,7 +282,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/attack_male:frame")
 tracks/0/interp = 1
@@ -311,7 +310,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=9]
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/death_male:frame")
 tracks/0/interp = 1
@@ -325,7 +324,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=10]
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/deflect_male:frame")
 tracks/0/interp = 1
@@ -339,7 +338,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=11]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -355,7 +354,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=12]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("TextureRect/moving_male:frame")
@@ -370,13 +369,13 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 }
 
-[sub_resource type="CircleShape2D" id=14]
+[sub_resource type="CircleShape2D" id=13]
 radius = 9.05539
 
-[sub_resource type="StyleBoxFlat" id=15]
+[sub_resource type="StyleBoxFlat" id=14]
 bg_color = Color( 0, 0.486275, 1, 1 )
 
-[sub_resource type="StyleBoxFlat" id=16]
+[sub_resource type="StyleBoxFlat" id=15]
 bg_color = Color( 0, 0, 0, 1 )
 
 [node name="Player" type="KinematicBody2D"]
@@ -492,11 +491,11 @@ anims/move = SubResource( 7 )
 
 [node name="AnimationPlayerMale" type="AnimationPlayer" parent="."]
 autoplay = "idle"
-anims/attack = SubResource( 9 )
-anims/death = SubResource( 10 )
-anims/deflect = SubResource( 11 )
-anims/idle = SubResource( 12 )
-anims/move = SubResource( 13 )
+anims/attack = SubResource( 8 )
+anims/death = SubResource( 9 )
+anims/deflect = SubResource( 10 )
+anims/idle = SubResource( 11 )
+anims/move = SubResource( 12 )
 
 [node name="HandShapeAttack" type="RayCast2D" parent="."]
 scale = Vector2( 3, 3 )
@@ -514,7 +513,7 @@ drag_margin_v_enabled = true
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 14 )
+shape = SubResource( 13 )
 
 [node name="Node2D" type="Node2D" parent="."]
 scale = Vector2( 0.25, 0.25 )
@@ -534,8 +533,8 @@ margin_left = -42.0
 margin_top = -124.0
 margin_right = 42.0
 margin_bottom = -110.0
-custom_styles/fg = SubResource( 15 )
-custom_styles/bg = SubResource( 16 )
+custom_styles/fg = SubResource( 14 )
+custom_styles/bg = SubResource( 15 )
 value = 100.0
 percent_visible = false
 __meta__ = {
