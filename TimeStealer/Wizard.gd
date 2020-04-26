@@ -32,18 +32,17 @@ var deathTime = 0
 func _ready():
 	textures[previousTextureId].show()
 
+func dead():
+	queue_free()
+
 func _physics_process(delta):
 	if len(textures) > previousTextureId:
 		textures[previousTextureId].flip_h = velocity.x > 0
 	
 	if time <= 0:
-		if deathTime > 0:
-			deathTime -= 1
-			showTexture(3)
-			animationPlayer.play("wizard_death")
-			return
-		else:
-			queue_free()
+		showTexture(3)
+		animationPlayer.play("wizard_death")
+		return
 		
 	if attack_cooldown > 0:
 		attack_cooldown-=1

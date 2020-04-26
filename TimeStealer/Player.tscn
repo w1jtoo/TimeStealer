@@ -1,7 +1,10 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Game/HealthBar.gd" type="Script" id=1]
 [ext_resource path="res://Resources/wizard spritesheet calciumtrice.png" type="Texture" id=2]
+[ext_resource path="res://Resources/spells/runes-orange-3.png" type="Texture" id=3]
+[ext_resource path="res://Resources/spells/leaf-jade-3.png" type="Texture" id=4]
+[ext_resource path="res://Resources/spells/ice-blue-3.png" type="Texture" id=5]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends KinematicBody2D
@@ -13,7 +16,8 @@ enum {
 
 enum {
 	MOVE,
-	ATTACK
+	ATTACK,
+	CAST
 }
 
 var state = MOVE
@@ -36,7 +40,25 @@ var damaged_timer = 0
 var isDead = false
 var wasDead = false
 
+enum {
+	NONE,
+	ICE_SHARDS,
+	TIME_AREA,
+	SHIELD
+}
+
+var spellInstances = [preload(\"res://Game/World/IceArrow.tscn\"),
+	preload(\"res://Game/World/TimeStealingArea.tscn\"),
+	preload(\"res://Game/World/Shield.tscn\")]
+
 var items = []
+
+onready var spellTextures = [$Node2D/Panel2/TextureRect/Panel,
+ $\"Node2D/Panel2/TextureRect/ice-blue-3\",
+ $\"Node2D/Panel2/TextureRect/leaf-jade-3\",
+ $\"Node2D/Panel2/TextureRect/runes-orange-3\"]
+
+var currentSpell = NONE
 
 onready var animationPlayer = $AnimationPlayerMale
 
@@ -52,6 +74,9 @@ onready var maleTextures = [$TextureRect/idle_male, $TextureRect/moving_male,
 var textures = []
 
 signal damaged(value, max_value)
+signal spell_changed(type)
+
+var oldVelocity = Vector2.RIGHT
 
 func _ready():
 	if sex == Male:
@@ -89,7 +114,9 @@ func _process(delta):
 		
 		ATTACK:
 			attack_state(delta)
-
+		
+		CAST:
+			attack_state(delta)
 
 func attack_state(delta):
 	showTexture(2)
@@ -97,29 +124,33 @@ func attack_state(delta):
 	
 
 func attack_animation_finished():
-	$HandShapeAttack.force_raycast_update()
-	var now = OS.get_ticks_msec()
-	if now >= next_attack_time:
-		if $HandShapeAttack.is_colliding():
-			next_attack_time = now + attack_cooldown_time
-			print(\"ATTACK SUCCESS\")
-			var target = $HandShapeAttack.get_collider()
-			target.hit(attack_damage)
-			consume_time(-attack_damage)
-		
-		#var input_vector = Vector2.ZERO
-		#input_vector.x = Input.get_action_strength(\"ui_right\") - Input.get_action_strength(\"ui_left\")
-		#input_vector.y = Input.get_action_strength(\"ui_down\") - Input.get_action_strength(\"ui_up\")
-		#input_vector = input_vector.normalized()
-		
-		#if input_vector.x > 0:
-		#	animationPlayer.play(\"attack\")
-		#else:
-			#var left_attack = $TextureRect/attack_male.flip_h
-		
-		if len(textures) > previousTextureId && velocity.x != 0:
-			textures[previousTextureId].flip_h = velocity.x < 0
-		animationPlayer.play(\"attack\")
+	match state:
+		ATTACK:
+			$HandShapeAttack.force_raycast_update()
+			var now = OS.get_ticks_msec()
+			if now >= next_attack_time:
+				if $HandShapeAttack.is_colliding():
+					next_attack_time = now + attack_cooldown_time
+					var target = $HandShapeAttack.get_collider()
+					target.hit(attack_damage)
+					consume_time(-attack_damage)
+					
+				if len(textures) > previousTextureId && velocity.x != 0:
+					textures[previousTextureId].flip_h = velocity.x < 0
+		CAST:
+			var now = OS.get_ticks_msec()
+			if now >= next_attack_time and currentSpell != NONE:
+				next_attack_time = now + attack_cooldown_time
+				var dir = velocity.normalized()
+				if dir == Vector2.ZERO:
+					dir = oldVelocity.normalized()
+				
+				createSpell(dir)
+				consume_time(-attack_damage)
+					
+				if len(textures) > previousTextureId && velocity.x != 0:
+					textures[previousTextureId].flip_h = velocity.x < 0
+				
 	state = MOVE
 
 func move_state(delta):
@@ -132,6 +163,8 @@ func move_state(delta):
 	if input_vector != Vector2.ZERO:
 		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
 	else:
+		if velocity != Vector2.ZERO:
+			oldVelocity = velocity
 		velocity = velocity.move_toward(input_vector, ACCELERATION * delta)
 	
 	velocity = move_and_slide(velocity)
@@ -149,6 +182,8 @@ func move_state(delta):
 	if velocity != Vector2.ZERO:
 		$HandShapeAttack.cast_to = velocity.normalized() * 6
 	
+	if Input.is_action_just_pressed(\"cast_spell\"):
+		state = CAST
 	if Input.is_action_just_pressed(\"attack\"):
 		state = ATTACK
 
@@ -182,11 +217,35 @@ func hit(damage):
 func dead():
 	isDead = true
 
+func createSpell(dir):
+	match currentSpell:
+		ICE_SHARDS:
+			var shards = spellInstances[0].instance()
+			shards.position = position+dir*16
+			shards.velocity = dir*MAX_SPEED
+			shards.caster = self
+			self.get_parent().add_child(shards)
+		TIME_AREA:
+			var area = spellInstances[1].instance()
+			area.position = position+dir*16
+			area.caster = self
+			self.get_parent().add_child(area)
+		SHIELD:
+			var shield = spellInstances[2].instance()
+			shield.position = position+dir*16
+			shield.caster = self
+			shield.rotation = -dir.angle_to(Vector2.RIGHT)
+			self.get_parent().add_child(shield)
+	
+
 
 func _on_item_entered(body):
 	if body.get_name().begins_with(\"Item\"):
 		items.append(body)
 		body.get_parent().remove_child(body)
+	if body.get_name().begins_with(\"Spell\"):
+		currentSpell = body.type + 1
+		emit_signal(\"spell_changed\", currentSpell)
 "
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -213,7 +272,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 1 ),
+"times": PoolRealArray( 0.6 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -302,7 +361,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 1 ),
+"times": PoolRealArray( 0.6 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -378,6 +437,9 @@ bg_color = Color( 0, 0.486275, 1, 1 )
 [sub_resource type="StyleBoxFlat" id=15]
 bg_color = Color( 0, 0, 0, 1 )
 
+[sub_resource type="StyleBoxFlat" id=16]
+bg_color = Color( 0.301961, 0.301961, 0.301961, 1 )
+
 [node name="Player" type="KinematicBody2D"]
 scale = Vector2( 4, 4 )
 collision_layer = 2
@@ -416,6 +478,7 @@ visible = false
 position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 10
+frame = 8
 region_enabled = true
 region_rect = Rect2( -1, 256, 320, 32 )
 
@@ -458,6 +521,7 @@ visible = false
 position = Vector2( 16, 16 )
 texture = ExtResource( 2 )
 hframes = 10
+frame = 8
 region_enabled = true
 region_rect = Rect2( -1, 96, 320, 32 )
 
@@ -540,5 +604,50 @@ percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Panel2" type="Panel" parent="Node2D"]
+margin_left = 44.0
+margin_top = -126.0
+margin_right = 62.0
+margin_bottom = -108.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Node2D/Panel2"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 16.0
+margin_bottom = 16.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Node2D/Panel2/TextureRect"]
+margin_right = 14.0
+margin_bottom = 14.0
+custom_styles/panel = SubResource( 16 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ice-blue-3" type="Sprite" parent="Node2D/Panel2/TextureRect"]
+visible = false
+position = Vector2( 7, 7 )
+scale = Vector2( 0.06, 0.06 )
+texture = ExtResource( 5 )
+
+[node name="leaf-jade-3" type="Sprite" parent="Node2D/Panel2/TextureRect"]
+visible = false
+position = Vector2( 7, 7 )
+scale = Vector2( 0.06, 0.06 )
+texture = ExtResource( 4 )
+
+[node name="runes-orange-3" type="Sprite" parent="Node2D/Panel2/TextureRect"]
+visible = false
+position = Vector2( 7, 7 )
+scale = Vector2( 0.06, 0.06 )
+texture = ExtResource( 3 )
 [connection signal="damaged" from="." to="Node2D" method="_on_Player_damaged"]
+[connection signal="spell_changed" from="." to="Node2D" method="_on_Player_spell_changed"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_item_entered"]
