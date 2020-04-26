@@ -21,13 +21,7 @@ var target = null
 var neighbours = []
 
 func _physics_process(delta):
-	if target != null:
-		var dir = (target.position - self.position).normalized()
-		velocity = velocity.move_toward(dir*2000, ACCELERATION)
-		for neigh in neighbours:
-			dir = (neigh.position - self.position).normalized()
-			velocity = velocity.move_toward(-dir*300, ACCELERATION)
-		velocity = move_and_slide(velocity)
+	pass
 
 
 func _on_Area2D_body_entered(body):

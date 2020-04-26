@@ -14,10 +14,9 @@ var timer = 200
 
 func _physics_process(delta):
 	for b in targets:
-		print(b.get_name())
 		var deltaVelocity = b.velocity*0.1
 		b.velocity = b.velocity-deltaVelocity
-		if caster != null:
+		if caster != null && b != caster:
 			caster.consume_time(-deltaVelocity.length()/8/100)
 	
 	if timer > 0:
