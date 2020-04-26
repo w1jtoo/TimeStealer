@@ -27,7 +27,7 @@ type = 0
 scale = Vector2( 16, 16 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 684, 18804 )
+position = Vector2( 8662.36, 3284.45 )
 scale = Vector2( 16, 16 )
 
 [node name="TimeUrn" parent="." instance=ExtResource( 4 )]

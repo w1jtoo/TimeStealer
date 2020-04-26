@@ -60,7 +60,12 @@ onready var spellTextures = [$Node2D/Panel2/TextureRect/Panel,
  $\"Node2D/Panel2/TextureRect/leaf-jade-3\",
  $\"Node2D/Panel2/TextureRect/runes-orange-3\"]
 
-var currentSpell = NONE
+var currentSpell = NONE setget set_spell
+
+		
+func set_spell(value):
+	currentSpell = value
+	emit_signal(\"spell_changed\", currentSpell)
 
 onready var animationPlayer = $AnimationPlayerMale
 
@@ -257,9 +262,6 @@ func _on_item_entered(body):
 	if body.get_name().begins_with(\"Item\"):
 		items.append(body)
 		body.get_parent().remove_child(body)
-	if body.get_name().begins_with(\"Spell\"):
-		currentSpell = body.type + 1
-		emit_signal(\"spell_changed\", currentSpell)
 
 
 func _on_PauseMenuScene_background_fade_finish():
