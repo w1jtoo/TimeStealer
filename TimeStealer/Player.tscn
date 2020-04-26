@@ -109,7 +109,6 @@ func _unhandled_input(event) -> void:
 
 func _process(delta):
 	var dir = oldVelocity.normalized()
-	print(dir)
 	if len(textures) > previousTextureId && dir.x != 0:
 		textures[previousTextureId].flip_h = dir.x < 0
 	# there is crutch, delete it!  
