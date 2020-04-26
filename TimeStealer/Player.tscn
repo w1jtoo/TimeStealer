@@ -21,6 +21,7 @@ enum {
 	CAST
 }
 
+export var getting_dmg_cooldown = 50
 var state = MOVE
 var max_time = 100
 var time_health = 100
@@ -131,7 +132,7 @@ func _process(delta):
 	else:
 		textureRect.modulate = Color(1.0, 1.0, 1.0, 1.0)
 	
-	if time_health <= 0:
+	if time_health <=0:
 		if isDead and not wasDead:
 			showTexture(4)
 			animationPlayer.play(\"death\")
@@ -162,7 +163,6 @@ func _process(delta):
 
 func attack_state(delta):
 	showTexture(2)
-	velocity = velocity.move_toward(Vector2.ZERO, ACCELERATION * delta)
 	animationPlayer.play(\"attack\")
 	
 
@@ -177,6 +177,9 @@ func attack_animation_finished():
 					var target = $HandShapeAttack.get_collider()
 					target.hit(attack_damage)
 					consume_time(-attack_damage)
+					
+				if len(textures) > previousTextureId && velocity.x != 0:
+					textures[previousTextureId].flip_h = velocity.x < 0
 		CAST:
 			var now = OS.get_ticks_msec()
 			if now >= next_attack_time:
@@ -186,10 +189,29 @@ func attack_animation_finished():
 					createSpell(dir)
 					consume_time(attack_damage/5)
 					
+				if len(textures) > previousTextureId && velocity.x != 0:
+					textures[previousTextureId].flip_h = velocity.x < 0
+				
 	state = MOVE
 
 func move_state(delta):
 	consume_time(velocity.length()/MAX_SPEED/5)
+	var input_vector = Vector2.ZERO
+	input_vector.x = Input.get_action_strength(\"ui_right\") - Input.get_action_strength(\"ui_left\")
+	input_vector.y = Input.get_action_strength(\"ui_down\") - Input.get_action_strength(\"ui_up\")
+	input_vector = input_vector.normalized()
+	
+	if input_vector != Vector2.ZERO:
+		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
+	else:
+		if velocity != Vector2.ZERO:
+			oldVelocity = velocity
+		velocity = velocity.move_toward(input_vector, ACCELERATION * delta)
+	
+	velocity = move_and_slide(velocity)
+	
+	if len(textures) > previousTextureId && velocity.x != 0:
+		textures[previousTextureId].flip_h = velocity.x < 0
 	
 	if velocity != Vector2.ZERO:
 		animationPlayer.play(\"move\")
@@ -222,11 +244,12 @@ func consume_time(value):
 		dead()
 
 func hit(damage):
-	if time_health > 0:
+	# print('got hit: ', damage)
+	if time_health > 0 and damaged_timer == 0:
 		time_health -= damage
 		emit_signal(\"damaged\",time_health, max_time)
-		damaged_timer = 20
-		# print('Player got damage, time left:', time_health)
+		damaged_timer = getting_dmg_cooldown
+		# print('Player got damage: ', damage)
 		if time_health <= 0:
 			dead()
 	
@@ -278,7 +301,7 @@ func _on_PauseMenuScene_background_fade_finish():
 "
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 6.88224, 5.63164 )
+extents = Vector2( 6.88224, 1.5 )
 
 [sub_resource type="Animation" id=3]
 loop = true
