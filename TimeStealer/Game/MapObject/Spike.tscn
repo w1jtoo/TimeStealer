@@ -156,7 +156,6 @@ playing = true
 [node name="SingleSpike" type="AnimatedSprite" parent="."]
 position = Vector2( -0.950268, -4.47093 )
 frames = SubResource( 31 )
-frame = 12
 playing = true
 [connection signal="area_entered" from="." to="." method="_on_Spike_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_Spike_body_entered"]

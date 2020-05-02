@@ -4,7 +4,7 @@ onready var start_animation_time = OS.get_ticks_msec()
 onready var next_attack_time = 0
 var last_bodies = []
 export var attack_cooldown = 858
-export var spike_damage = 50
+export var spike_damage = 0
 
 func _physics_process(delta):
 	for body in last_bodies:

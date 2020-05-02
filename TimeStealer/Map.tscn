@@ -1817,7 +1817,7 @@ margin_right = -161.0
 margin_bottom = 1008.0
 
 [node name="DoublePillar2" parent="." instance=ExtResource( 10 )]
-position = Vector2( -176, 888 )
+position = Vector2( -112, 1176 )
 
 [node name="Spikes12" parent="." instance=ExtResource( 16 )]
 margin_left = -24.0

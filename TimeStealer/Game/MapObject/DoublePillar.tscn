@@ -1,9 +1,14 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Resources/Pillar.png" type="Texture" id=1]
+[ext_resource path="res://Game/MapObject/DoublePillar.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 37.9237, 137.109 )
 
 [node name="DoublePillar" type="StaticBody2D"]
 collision_mask = 6
+script = ExtResource( 2 )
 
 [node name="Pillar" type="Sprite" parent="."]
 position = Vector2( 0.599998, -31 )
@@ -12,7 +17,18 @@ texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 64, 0, 32, 80 )
 
+[node name="Tween" type="Tween" parent="."]
+
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2( -45.4, -75 )
 scale = Vector2( 0.395531, 0.211511 )
 polygon = PoolVector2Array( 75.8475, 293.129, 156.751, 293.129, 156.751, 397.143, 75.8475, 397.143 )
+
+[node name="Area2D" type="Area2D" parent="."]
+scale = Vector2( 0.395531, 0.211511 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 0, -193.843 )
+shape = SubResource( 1 )
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]

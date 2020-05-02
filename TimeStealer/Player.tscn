@@ -497,6 +497,7 @@ scale = Vector2( 4, 4 )
 collision_layer = 2
 collision_mask = 21
 script = SubResource( 1 )
+getting_dmg_cooldown = 500
 
 [node name="Camera2D" type="Camera2D" parent="."]
 scale = Vector2( 0.25, 0.25 )
