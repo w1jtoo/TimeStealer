@@ -15,7 +15,7 @@ __meta__ = {
 [node name="YSort" type="YSort" parent="."]
 
 [node name="Wizard" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( 10372, 11046 )
+position = Vector2( 18057, 5462 )
 scale = Vector2( 6, 6 )
 
 [node name="Boss" parent="YSort" instance=ExtResource( 6 )]
@@ -40,8 +40,9 @@ scale = Vector2( 4, 4 )
 scale = Vector2( 16, 16 )
 
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
-position = Vector2( 955, 18734 )
+position = Vector2( 9177, 11618 )
 scale = Vector2( 16, 16 )
+is_god = true
 
 [node name="Text" parent="." instance=ExtResource( 4 )]
 margin_left = -4.79639
